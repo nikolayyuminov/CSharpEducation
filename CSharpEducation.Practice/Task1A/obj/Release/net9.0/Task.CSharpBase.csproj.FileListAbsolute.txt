@@ -1,0 +1,15 @@
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\bin\Release\net9.0\Task.CSharpBase.exe
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\bin\Release\net9.0\Task.CSharpBase.deps.json
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\bin\Release\net9.0\Task.CSharpBase.runtimeconfig.json
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\bin\Release\net9.0\Task.CSharpBase.dll
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\bin\Release\net9.0\Task.CSharpBase.pdb
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.AssemblyInfoInputs.cache
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.AssemblyInfo.cs
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.csproj.CoreCompileInputs.cache
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.sourcelink.json
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.dll
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\refint\Task.CSharpBase.dll
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.pdb
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\Task.CSharpBase.genruntimeconfig.cache
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Task.CSharpBase\obj\Release\net9.0\ref\Task.CSharpBase.dll

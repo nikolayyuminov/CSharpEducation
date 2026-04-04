@@ -1,16 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task.CSharpBase", "Task.CSharpBase\Task.CSharpBase.csproj", "{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1A", "Task1A\Task1A.csproj", "{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task1.CSharpBase", "Task1.CSharpBase", "{633CB6A8-06D4-4503-A319-1F8C93C493C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1B", "Task1B\Task1B.csproj", "{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		CheckIn|Any CPU = CheckIn|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}.CheckIn|Any CPU.ActiveCfg = CheckIn|Any CPU
+		{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA}.CheckIn|Any CPU.Build.0 = CheckIn|Any CPU
+		{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51}.CheckIn|Any CPU.ActiveCfg = CheckIn|Any CPU
+		{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51}.CheckIn|Any CPU.Build.0 = CheckIn|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AA7BCD60-4D7D-4969-A5B5-027B3DBC37BA} = {633CB6A8-06D4-4503-A319-1F8C93C493C8}
+		{1618F5B5-DE4F-4FDE-8BDA-431BF126EE51} = {633CB6A8-06D4-4503-A319-1F8C93C493C8}
 	EndGlobalSection
 EndGlobal
