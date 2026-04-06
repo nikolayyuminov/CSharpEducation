@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace Task.CSharpBase;
+namespace Task2;
 
 class Program
 {
+
   static void Main(string[] args)
   {
     const double Pi = 3.14;
@@ -25,20 +26,20 @@ class Program
   }
 
   static void EnterTheName()
-  {
-    Console.Write($"Введите ваше имя: ");
-    var name = Console.ReadLine();
-    Console.WriteLine($"Привет, {name}!");
-  }
+    {
+      Console.Write($"Введите ваше имя: ");
+      var name = Console.ReadLine();
+      Console.WriteLine($"Привет, {name}!");
+    }
 
   static void EnterTwoPphrase()
-  {
-    Console.Write("Введите первую фразу: ");
-    var phrase1= Console.ReadLine();
-    Console.Write("Введите вторую фразу: ");
-    var phrase2 = Console.ReadLine();
-    Console.WriteLine($"{phrase1} {phrase2}"); 
-  }
+    {
+      Console.Write("Введите первую фразу: ");
+      var phrase1= Console.ReadLine();
+      Console.Write("Введите вторую фразу: ");
+      var phrase2 = Console.ReadLine();
+      Console.WriteLine($"{phrase1} {phrase2}"); 
+    }
 
   static void AreaOfCircle()
   {
@@ -56,21 +57,21 @@ class Program
     if (hypotenuse == 0)
     {
       hypotenuse = Math.Sqrt(Math.Pow(leg1, 2) + Math.Pow(leg2, 2));
-      Console.WriteLine($"Катет 1: {leg1:F2}, Катет 2: {leg2:F2}, Гипотенуза: {hypotenuse:F2}");
+      Console.WriteLine($"Катет 1: {leg1}, Катет 2: {leg2}, Гипотенуза: {hypotenuse}");
     }
     else if (leg1 == 0)
     {
       leg1 = Math.Sqrt(Math.Pow(hypotenuse, 2) - Math.Pow(leg2, 2));
-      Console.WriteLine($"Катет 1: {leg1:F2}, Катет 2: {leg2:F2}, Гипотенуза: {hypotenuse:F2}");
+      Console.WriteLine($"Катет 1: {leg1}, Катет 2: {leg2}, Гипотенуза: {hypotenuse}");
     }
     else if (leg2 == 0)
     {
       leg2 = Math.Sqrt(Math.Pow(hypotenuse, 2) - Math.Pow(leg1, 2));
-      Console.WriteLine($"Катет 1: {leg1:F2}, Катет 2: {leg2:F2}, Гипотенуза: {hypotenuse:F2}");
+      Console.WriteLine($"Катет 1: {leg1}, Катет 2: {leg2}, Гипотенуза: {hypotenuse}");
     }
     else
     {
-      Console.WriteLine($"Катет 1: {leg1:F2}, Катет 2: {leg2:F2}, Гипотенуза: {hypotenuse:F2}");
+      Console.WriteLine($"Катет 1: {leg1}, Катет 2: {leg2}, Гипотенуза: {hypotenuse}");
     }
   }
 }
