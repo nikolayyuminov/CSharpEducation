@@ -12,3 +12,4 @@ D:\Study SC\CSharpEducation\CSharpEducation\Task1\obj\Debug\net9.0\refint\Task1.
 D:\Study SC\CSharpEducation\CSharpEducation\Task1\obj\Debug\net9.0\Task1.pdb
 D:\Study SC\CSharpEducation\CSharpEducation\Task1\obj\Debug\net9.0\Task1.genruntimeconfig.cache
 D:\Study SC\CSharpEducation\CSharpEducation\Task1\obj\Debug\net9.0\ref\Task1.dll
+D:\Study SC\CSharpEducation\CSharpEducation\Task1\obj\Debug\net9.0\Task1.sourcelink.json

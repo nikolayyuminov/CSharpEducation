@@ -1,0 +1,15 @@
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\bin\Debug\net9.0\TicTacToe.exe
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\bin\Debug\net9.0\TicTacToe.deps.json
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\bin\Debug\net9.0\TicTacToe.runtimeconfig.json
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\bin\Debug\net9.0\TicTacToe.dll
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\bin\Debug\net9.0\TicTacToe.pdb
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.AssemblyInfoInputs.cache
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.AssemblyInfo.cs
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.csproj.CoreCompileInputs.cache
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.sourcelink.json
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.dll
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\refint\TicTacToe.dll
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.pdb
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\TicTacToe.genruntimeconfig.cache
+D:\Study SC\CSharpEducation\CSharpEducation\TicTacToe\obj\Debug\net9.0\ref\TicTacToe.dll
