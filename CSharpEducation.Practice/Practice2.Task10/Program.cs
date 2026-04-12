@@ -4,7 +4,7 @@ class Program
 {
   static void Main(string[] args)
   {
-    Console.WriteLine("Задача 9!");
+    Console.WriteLine("Задача 10!");
     var massive = CreateMassive(int.Parse(args[0]));
     PrintMassive(massive);
   }
