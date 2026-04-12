@@ -15,11 +15,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2Task18\\Practice2Task18.csproj",
-      "projectName": "Practice2Task18",
-      "projectPath": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2Task18\\Practice2Task18.csproj",
+      "projectUniqueName": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2.Task18\\Practice2.Task18.csproj",
+      "projectName": "Practice2.Task18",
+      "projectPath": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2.Task18\\Practice2.Task18.csproj",
       "packagesPath": "C:\\Users\\yuminov_ns\\.nuget\\packages\\",
-      "outputPath": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2Task18\\obj\\",
+      "outputPath": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2.Task18\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
