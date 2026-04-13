@@ -4,50 +4,30 @@ namespace TicTacToe
 {
     public class TicTacToe
     {
-        static Player? player;
         static Random rand = new Random();
 
-        static void Main()
+        public static void StartGame()
         {
             Console.Clear();
             Console.WriteLine("Tic Tac Toe Game");
-            while (true)
+
+            
+            Console.Write("Введите имя игрока: ");
+            var name = Console.ReadLine();
+            Console.Write($"Чем будешь играть?(X или 0): ");
+            if (!char.TryParse(Console.ReadLine(), out var playerChar))
             {
-                Console.Write("Введите имя игрока: ");
-                var name = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("Имя не может быть пустым");
-                    continue;
-                }
-                else if (name == "exit")
-                {
-                    break;
-                }
-                
-                var playerSymbol = "";
-                while (playerSymbol != "X" && playerSymbol != "0")
-                {
-                    Console.Write($"Привет, {name}. Чем будешь играть?(X или 0): ");
-                    playerSymbol = Console.ReadLine();
-                    if (playerSymbol != "X" && playerSymbol != "0")
-                    {
-                        Console.WriteLine("Нужно Ввести \"X\" или \"0\"");
-                        continue;
-                    }
-                    else if (playerSymbol == "exit")
-                    {
-                        break;
-                    }
-                    
-                    player = new Player(name, Convert.ToChar(playerSymbol));
-                }
-                break;
+                playerChar = ' ';
             }
+            Player player = new Player(name, playerChar);
+            Console.WriteLine($"Привет, {player.Name}! Ты играешь за {player.Symbol}");
             
             var board = new Board(3,3);
             board.PrintBoard();
             
+            player.Move(board);
+            Console.Clear();
+            board.PrintBoard();
 
 /*
             while (true)

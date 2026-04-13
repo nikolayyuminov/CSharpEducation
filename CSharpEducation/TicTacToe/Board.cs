@@ -7,6 +7,7 @@ public class Board
   #region Поля и свойства
 
   private static char[,] _board;
+  public char[,] Cell { get { return _board; } set { _board = value; } }
 
   #endregion
   
@@ -22,7 +23,25 @@ public class Board
       Console.Write(" " + i + " |");
       for (int j = 0; j < _board.GetLength(1) ; j++)
       {
-        Console.Write(" " + _board[i, j] + " ");
+        Console.Write(" ");
+        if (_board[i, j] == 'X')
+        {
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.Write('X');
+        }
+        else if (_board[i, j] == 'O')
+        {
+          Console.ForegroundColor = ConsoleColor.Blue;
+          Console.Write('O');
+        }
+        else
+        {
+          Console.ForegroundColor = ConsoleColor.DarkGray;
+          Console.Write(' ');
+        }
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write(" ");
         if (j < _board.GetLength(1)) Console.Write("|");
       }
       Console.WriteLine();
@@ -49,5 +68,4 @@ public class Board
   }
 
   #endregion
-
 }
