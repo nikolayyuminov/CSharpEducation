@@ -29,10 +29,10 @@ public class Board
           Console.ForegroundColor = ConsoleColor.Red;
           Console.Write('X');
         }
-        else if (_board[i, j] == 'O')
+        else if (_board[i, j] == '0')
         {
           Console.ForegroundColor = ConsoleColor.Blue;
-          Console.Write('O');
+          Console.Write('0');
         }
         else
         {

@@ -36,6 +36,8 @@ public class Player
 
   public void Move(Board board)
   {
+    Console.Clear();
+    Console.WriteLine("Tic Tac Toe Game");
     Console.ForegroundColor = ConsoleColor.Red;
     while (true)
     {
@@ -63,11 +65,13 @@ public class Player
         Console.WriteLine("Клетка занята!");
         continue;
       }
-
       board.Cell[row, col] = this.Symbol;
-      Console.ResetColor();
       break;
     }
+    Console.Clear();
+    Console.WriteLine($"Ход игрока {Name}... ");
+    board.PrintBoard();
+    Console.ResetColor();
   }
 
   #endregion
