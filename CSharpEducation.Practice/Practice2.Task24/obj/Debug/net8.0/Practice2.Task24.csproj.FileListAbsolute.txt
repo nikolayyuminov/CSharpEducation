@@ -1,0 +1,15 @@
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.AssemblyInfoInputs.cache
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.AssemblyInfo.cs
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.csproj.CoreCompileInputs.cache
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.sourcelink.json
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\bin\Debug\net8.0\Practice2.Task24.exe
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\bin\Debug\net8.0\Practice2.Task24.deps.json
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\bin\Debug\net8.0\Practice2.Task24.runtimeconfig.json
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\bin\Debug\net8.0\Practice2.Task24.dll
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\bin\Debug\net8.0\Practice2.Task24.pdb
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.dll
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\refint\Practice2.Task24.dll
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.pdb
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\Practice2.Task24.genruntimeconfig.cache
+D:\Study SC\CSharpEducation\CSharpEducation.Practice\Practice2.Task24\obj\Debug\net8.0\ref\Practice2.Task24.dll
