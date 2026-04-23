@@ -6,7 +6,7 @@ public class Board
 {
   #region Поля и свойства
 
-  private static char[,] _board;
+  private static char[,]? _board;
   public char[,] Cell { get { return _board; } set { _board = value; } }
 
   #endregion

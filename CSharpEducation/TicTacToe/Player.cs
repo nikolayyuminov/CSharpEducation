@@ -20,7 +20,11 @@ public class Player
     get => _symbol;
     private init
     {
-      if  (value != 'X' && value != '0')
+      if (value == 'o' || value == 'O')
+      {
+        _symbol = '0';
+      }
+      else if  (value != 'X' && value != '0')
       {
         _symbol = 'X';
       }
@@ -37,8 +41,24 @@ public class Player
   public void Move(Board board)
   {
     Console.Clear();
+    if (Symbol == 'X')
+    {
+      Console.ForegroundColor = ConsoleColor.Red;
+    }
+    else
+    {
+      Console.ForegroundColor = ConsoleColor.Blue;
+    }
     Console.WriteLine("Tic Tac Toe Game");
-    Console.ForegroundColor = ConsoleColor.Red;
+    board.PrintBoard();
+    if (Symbol == 'X')
+    {
+      Console.ForegroundColor = ConsoleColor.Red;
+    }
+    else
+    {
+      Console.ForegroundColor = ConsoleColor.Blue;
+    }
     while (true)
     {
       Console.Write("Введите ход (строка столбец): ");
@@ -65,10 +85,11 @@ public class Player
         Console.WriteLine("Клетка занята!");
         continue;
       }
-      board.Cell[row, col] = this.Symbol;
+      board.Cell[row, col] = Symbol;
       break;
     }
     Console.Clear();
+    Console.WriteLine("Tic Tac Toe Game");
     Console.WriteLine($"Ход игрока {Name}... ");
     board.PrintBoard();
     Console.ResetColor();

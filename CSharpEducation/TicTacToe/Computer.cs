@@ -31,8 +31,15 @@ public class Computer
   {
     Random rand = new Random();
     Console.Clear();
+    if (Symbol == 'X')
+    {
+      Console.ForegroundColor = ConsoleColor.Red;
+    }
+    else
+    {
+      Console.ForegroundColor = ConsoleColor.Blue;
+    }
     Console.WriteLine("Tic Tac Toe Game");
-    Console.ForegroundColor = ConsoleColor.Blue;
     Console.Write("Ход компьютера");
     System.Threading.Thread.Sleep(500);
     Console.Write(".");

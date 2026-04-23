@@ -1,6 +1,6 @@
 namespace TicTacToe;
 
-public class GameManager
+public static class GameManager
 {
   #region Поля и свойства
   
@@ -67,7 +67,7 @@ public class GameManager
     return false;
   }
 
-  public static bool CheckGameraw(Board board)
+  public static bool CheckGameRaw(Board board)
   {
     foreach (char cell in board.Cell)
       if (cell == ' ')

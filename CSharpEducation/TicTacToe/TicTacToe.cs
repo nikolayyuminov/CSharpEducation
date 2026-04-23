@@ -23,56 +23,68 @@ namespace TicTacToe;
             
             var board = new Board(3,3);
             
-            Console.WriteLine($"Нажми любую клавишу чтобы начать игру!");
+            Console.WriteLine($"Готов? Нажми любую клавишу чтобы начать игру!");
             Console.ReadKey();
 
             GameManager.FirstMove(player, computer, board);
-            
-            GameManager.SwitchPlayer(player, computer);
-            if (GameManager.CheckWin(player, computer, board))
+            Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
+            Console.WriteLine();
+            var keyInfo = Console.ReadKey(true);
+            if (keyInfo.Key != ConsoleKey.E)
             {
-                    Console.Clear();
-                    board.PrintBoard();
-                    if (GameManager.CurrentPlayer == player.ToString())
-                    {
-                        Console.WriteLine($"Победил игрок {player.Name}!");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Победил Компьютер!");
-                    }
-                    break;
-            }
-            if (GameManager.CheckGameraw(board))
-            {
-                Console.Clear();
-                board.PrintBoard();
-                Console.WriteLine("Ничья!");
-                break;
-            }
-
-/*
-            while (true)
-            {
-                Console.Clear();
-                board.PrintBoard();
-
-                if (currentPlayer == 'X')
+                while (true)
                 {
-                    Console.WriteLine("Ход игрока X");
-                    PlayerMove();
-                }
-                else
-                {
-                    Console.WriteLine("Ход компьютера O...");
-                    System.Threading.Thread.Sleep(700);
-                    ComputerMove();
-                }
+                     if (GameManager.CheckWin(player, computer, board))
+                     {
+                         Console.Clear();
+                         Console.WriteLine("Tic Tac Toe Game");
+                         board.PrintBoard();
+                         if (GameManager.CurrentPlayer == player.ToString())
+                         {
+                             Console.WriteLine($"Победил игрок {player.Name}!");
+                         }
+                         else
+                         {
+                             Console.WriteLine($"Победил Компьютер!");
+                         }
+                         break;
+                     }
+                     if (GameManager.CheckGameRaw(board))
+                     {
+                         Console.Clear();
+                         Console.WriteLine("Tic Tac Toe Game");
+                         board.PrintBoard();
+                         Console.WriteLine("Ничья!");
+                         break;
+                     }
+                     GameManager.SwitchPlayer(player, computer);
+      
+                     if (GameManager.CurrentPlayer == player.ToString())
+                     {
+                         player.Move(board);
+                         Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
+                         Console.WriteLine();
+                         keyInfo = Console.ReadKey(true);
+                         if (keyInfo.Key == ConsoleKey.E)
+                         {
+                             break;
+                         }
+                     }
+                     else
+                     {
+                         computer.Move(board);
+                         Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
+                         Console.WriteLine();
+                         keyInfo = Console.ReadKey(true);
+                         if (keyInfo.Key == ConsoleKey.E)
+                         {
+                             break;
+                         }
+                     }
+                }  
             }
-
-            Console.WriteLine("Нажмите любую клавишу...");
+            Console.WriteLine("Игра завершена. Нажмите любую клавишу для выхода...");
             Console.ReadKey();
-        }
-*/
+
         }
     }
