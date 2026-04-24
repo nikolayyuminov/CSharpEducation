@@ -14,11 +14,18 @@ namespace TicTacToe;
             
             Console.Write("Введите имя игрока: ");
             var name = Console.ReadLine();
+            char playerChar;
             Console.Write($"Чем будешь играть?(X или 0): ");
-            if (!char.TryParse(Console.ReadLine(), out var playerChar))
+            do
             {
-                playerChar = SymbolX;
-            }
+                playerChar = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+                if (playerChar != SymbolX && playerChar != Symbol0)
+                {
+                    Console.Write("Не правильный символ, введите 'X' или '0':");
+                }
+            } while (playerChar != SymbolX && playerChar != Symbol0);
+            
             Player player = new Player(name, playerChar);
             Console.WriteLine($"Привет, {player.Name}! Ты играешь за {player.Symbol}");
             

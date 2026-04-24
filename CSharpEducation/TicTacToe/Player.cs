@@ -18,21 +18,7 @@ public class Player
   public char Symbol
   {
     get => _symbol;
-    private init
-    {
-      if (value == 'o' || value == 'O')
-      {
-        _symbol = TicTacToe.Symbol0;
-      }
-      else if  (value != TicTacToe.SymbolX && value != TicTacToe.Symbol0)
-      {
-        _symbol = TicTacToe.SymbolX;
-      }
-      else
-      {
-        _symbol = value;
-      }
-    }
+    private init => _symbol = value;
   }
   #endregion
 
