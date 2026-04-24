@@ -12,13 +12,13 @@ public class Computer
     get => _symbol;
     private init
     {
-      if  (value == 'X')
+      if  (value == TicTacToe.SymbolX)
       {
-        _symbol = '0';
+        _symbol = TicTacToe.Symbol0;
       }
       else
       {
-        _symbol = 'X';
+        _symbol = TicTacToe.SymbolX;
       }
     }
   }
@@ -31,7 +31,7 @@ public class Computer
   {
     Random rand = new Random();
     Console.Clear();
-    if (Symbol == 'X')
+    if (Symbol == TicTacToe.SymbolX)
     {
       Console.ForegroundColor = ConsoleColor.Red;
     }

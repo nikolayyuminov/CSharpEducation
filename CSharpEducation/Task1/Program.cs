@@ -6,5 +6,6 @@ class Program
   {
     Console.ForegroundColor = ConsoleColor.Green;
     Console.Write("Hello World!");
+    Console.ResetColor();
   }
 }

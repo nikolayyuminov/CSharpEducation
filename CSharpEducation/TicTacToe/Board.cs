@@ -6,6 +6,8 @@ public class Board
 {
   #region Поля и свойства
 
+  private const string border = "    ---+---+---";
+
   private static char[,]? _board;
   public char[,] Cell { get { return _board; } set { _board = value; } }
 
@@ -17,22 +19,22 @@ public class Board
   {
     Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine("     0   1   2");
-    Console.WriteLine("    ---+---+---");
+    Console.WriteLine(border);
     for (int i = 0; i < _board.GetLength(0); i++)
     {
       Console.Write(" " + i + " |");
       for (int j = 0; j < _board.GetLength(1) ; j++)
       {
         Console.Write(" ");
-        if (_board[i, j] == 'X')
+        if (_board[i, j] == TicTacToe.SymbolX)
         {
           Console.ForegroundColor = ConsoleColor.Red;
-          Console.Write('X');
+          Console.Write(TicTacToe.SymbolX);
         }
-        else if (_board[i, j] == '0')
+        else if (_board[i, j] == TicTacToe.Symbol0)
         {
           Console.ForegroundColor = ConsoleColor.Blue;
-          Console.Write('0');
+          Console.Write(TicTacToe.Symbol0);
         }
         else
         {
@@ -47,7 +49,7 @@ public class Board
       Console.WriteLine();
 
       if (i < _board.GetLength(0))
-        Console.WriteLine("    ---+---+---");
+        Console.WriteLine(border);
     }
     Console.ResetColor();
   }

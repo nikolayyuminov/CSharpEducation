@@ -12,7 +12,7 @@ public static class GameManager
 
   public static void FirstMove(Player player, Computer computer, Board board)
   {
-    if (player.Symbol == 'X')
+    if (player.Symbol == TicTacToe.SymbolX)
     {
       player.Move(board);
       CurrentPlayer = player.ToString();

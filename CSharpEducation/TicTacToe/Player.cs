@@ -22,11 +22,11 @@ public class Player
     {
       if (value == 'o' || value == 'O')
       {
-        _symbol = '0';
+        _symbol = TicTacToe.Symbol0;
       }
-      else if  (value != 'X' && value != '0')
+      else if  (value != TicTacToe.SymbolX && value != TicTacToe.Symbol0)
       {
-        _symbol = 'X';
+        _symbol = TicTacToe.SymbolX;
       }
       else
       {
@@ -41,7 +41,7 @@ public class Player
   public void Move(Board board)
   {
     Console.Clear();
-    if (Symbol == 'X')
+    if (Symbol == TicTacToe.SymbolX)
     {
       Console.ForegroundColor = ConsoleColor.Red;
     }
@@ -51,7 +51,7 @@ public class Player
     }
     Console.WriteLine("Tic Tac Toe Game");
     board.PrintBoard();
-    if (Symbol == 'X')
+    if (Symbol == TicTacToe.SymbolX)
     {
       Console.ForegroundColor = ConsoleColor.Red;
     }
