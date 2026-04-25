@@ -21,7 +21,7 @@ public class Player : BasePlayer
   public override void Move(Board board)
   {
     Console.Clear();
-    if (Symbol == TicTacToe.SymbolX)
+    if (Symbol == GameManager.SymbolX)
     {
       Console.ForegroundColor = ConsoleColor.Red;
     }
@@ -31,7 +31,7 @@ public class Player : BasePlayer
     }
     Console.WriteLine("Tic Tac Toe Game");
     board.PrintBoard();
-    if (Symbol == TicTacToe.SymbolX)
+    if (Symbol == GameManager.SymbolX)
     {
       Console.ForegroundColor = ConsoleColor.Red;
     }

@@ -26,15 +26,15 @@ public class Board
       for (int j = 0; j < _board.GetLength(1) ; j++)
       {
         Console.Write(" ");
-        if (_board[i, j] == TicTacToe.SymbolX)
+        if (_board[i, j] == GameManager.SymbolX)
         {
           Console.ForegroundColor = ConsoleColor.Red;
-          Console.Write(TicTacToe.SymbolX);
+          Console.Write(GameManager.SymbolX);
         }
-        else if (_board[i, j] == TicTacToe.Symbol0)
+        else if (_board[i, j] == GameManager.Symbol0)
         {
           Console.ForegroundColor = ConsoleColor.Blue;
-          Console.Write(TicTacToe.Symbol0);
+          Console.Write(GameManager.Symbol0);
         }
         else
         {

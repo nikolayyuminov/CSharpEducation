@@ -1,7 +1,11 @@
+using System;
+
 namespace TicTacToe;
 
 public static class GameManager
 {
+  public const char SymbolX = 'X';
+  public const char Symbol0 = '0';
   #region Поля и свойства
   
   public static BasePlayer CurrentPlayer { get; set; } = null!;
@@ -12,7 +16,7 @@ public static class GameManager
 
   public static void FirstMove(Player player, Computer computer, Board board)
   {
-    if (player.Symbol == TicTacToe.SymbolX)
+    if (player.Symbol == SymbolX)
     {
       player.Move(board);
       CurrentPlayer = player;
@@ -74,6 +78,78 @@ public static class GameManager
         return false;
 
     return true;
+  }
+
+  public static char SetPlayerSymbol()
+  {
+    char playerChar;
+    Console.Write($"Чем будешь играть?({SymbolX} или {Symbol0}): ");
+    do
+    {
+      playerChar = Console.ReadKey().KeyChar;
+      Console.WriteLine();
+      if (playerChar != SymbolX && playerChar != Symbol0)
+      {
+        Console.Write($"Не правильный символ, введите {SymbolX} или {Symbol0}:");
+      }
+    } while (playerChar != SymbolX && playerChar != Symbol0);
+    
+    return playerChar;
+  }
+
+  public static char SetComputerSymbol(Player player)
+  {
+    if  (player.Symbol == SymbolX)
+    {
+      return Symbol0;
+    }
+    return SymbolX;
+  }
+
+  public static void GameBody(Player player, Computer computer, Board board)
+  {
+    Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
+    var keyInfo = Console.ReadKey(true);
+    while (keyInfo.Key != ConsoleKey.E)
+    {
+      if (CheckWin(player, computer, board))
+      {
+        Console.Clear();
+        Console.WriteLine("Tic Tac Toe Game");
+        board.PrintBoard();
+        if (CurrentPlayer == player)
+        {
+          Console.WriteLine($"Победил игрок {player.Name}!");
+        }
+        else
+        {
+          Console.WriteLine($"Победил Компьютер!");
+        }
+        break;
+      }
+      if (CheckGameRaw(board))
+      {
+        Console.Clear();
+        Console.WriteLine("Tic Tac Toe Game");
+        board.PrintBoard();
+        Console.WriteLine("Ничья!");
+        break;
+      }
+      SwitchPlayer(player, computer);
+  
+      if (CurrentPlayer == player)
+      {
+        player.Move(board);
+        Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
+        keyInfo = Console.ReadKey(true);
+      }
+      else
+      {
+        computer.Move(board);
+        Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
+        keyInfo = Console.ReadKey(true);
+      }
+    }
   }
 
   #endregion

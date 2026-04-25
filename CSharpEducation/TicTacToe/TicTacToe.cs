@@ -4,9 +4,7 @@ namespace TicTacToe;
 
     public class TicTacToe
     {
-        public const char SymbolX = 'X';
-        public const char Symbol0 = '0';
-        
+       
         public static void StartGame()
         {
             Console.Clear();
@@ -14,29 +12,14 @@ namespace TicTacToe;
             
             Console.Write("Введите имя игрока: ");
             var name = Console.ReadLine();
-            char playerChar;
-            Console.Write($"Чем будешь играть?({SymbolX} или {Symbol0}): ");
-            do
-            {
-                playerChar = Console.ReadKey().KeyChar;
-                Console.WriteLine();
-                if (playerChar != SymbolX && playerChar != Symbol0)
-                {
-                    Console.Write($"Не правильный символ, введите {SymbolX} или {Symbol0}:");
-                }
-            } while (playerChar != SymbolX && playerChar != Symbol0);
+
+            var playerChar = GameManager.SetPlayerSymbol();
             
             var player = new Player(name, playerChar);
             Console.WriteLine($"Привет, {player.Name}! Ты играешь за {player.Symbol}");
-            char computerChar;
-            if  (player.Symbol == SymbolX)
-            {
-                 computerChar = Symbol0;
-            }
-            else
-            {
-                 computerChar = SymbolX;
-            }
+            
+            var computerChar = GameManager.SetComputerSymbol(player);
+
             var computer = new Computer(computerChar);
             
             var board = new Board(3,3);
@@ -45,48 +28,9 @@ namespace TicTacToe;
             Console.ReadKey();
 
             GameManager.FirstMove(player, computer, board);
-            Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
-            var keyInfo = Console.ReadKey(true);
-            while (keyInfo.Key != ConsoleKey.E)
-            {
-                 if (GameManager.CheckWin(player, computer, board))
-                 {
-                     Console.Clear();
-                     Console.WriteLine("Tic Tac Toe Game");
-                     board.PrintBoard();
-                     if (GameManager.CurrentPlayer == player)
-                     {
-                         Console.WriteLine($"Победил игрок {player.Name}!");
-                     }
-                     else
-                     {
-                         Console.WriteLine($"Победил Компьютер!");
-                     }
-                     break;
-                 }
-                 if (GameManager.CheckGameRaw(board))
-                 {
-                     Console.Clear();
-                     Console.WriteLine("Tic Tac Toe Game");
-                     board.PrintBoard();
-                     Console.WriteLine("Ничья!");
-                     break;
-                 }
-                 GameManager.SwitchPlayer(player, computer);
-  
-                 if (GameManager.CurrentPlayer == player)
-                 {
-                     player.Move(board);
-                     Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
-                     keyInfo = Console.ReadKey(true);
-                 }
-                 else
-                 {
-                     computer.Move(board);
-                     Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");
-                     keyInfo = Console.ReadKey(true);
-                 }
-            }
+            
+            GameManager.GameBody(player, computer, board);
+            
             Console.WriteLine();
             Console.WriteLine("Игра завершена. Нажмите любую клавишу для выхода...");
             Console.ReadKey();

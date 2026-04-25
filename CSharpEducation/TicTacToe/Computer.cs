@@ -10,7 +10,7 @@ public class Computer : BasePlayer
   {
     Random rand = new Random();
     Console.Clear();
-    if (Symbol == TicTacToe.SymbolX)
+    if (Symbol == GameManager.SymbolX)
     {
       Console.ForegroundColor = ConsoleColor.Red;
     }
