@@ -4,8 +4,8 @@ public static class GameManager
 {
   #region Поля и свойства
   
-  public static string? CurrentPlayer { get; set; }
-  
+  public static BasePlayer CurrentPlayer { get; set; } = null!;
+
   #endregion
 
   #region Методы
@@ -15,24 +15,24 @@ public static class GameManager
     if (player.Symbol == TicTacToe.SymbolX)
     {
       player.Move(board);
-      CurrentPlayer = player.ToString();
+      CurrentPlayer = player;
     }
     else
     {
       computer.Move(board);
-      CurrentPlayer = computer.ToString();
+      CurrentPlayer = computer;
     }
   }
 
   public static void SwitchPlayer(Player player, Computer computer)
   {
-    CurrentPlayer = (CurrentPlayer == player.ToString()) ? computer.ToString() : player.ToString();
+    CurrentPlayer = (CurrentPlayer == player) ? computer : player;
   }
   
   public static bool CheckWin(Player player, Computer computer, Board board)
   {
     char currentPlayerSymbol;
-    if (CurrentPlayer == player.ToString())
+    if (CurrentPlayer == player)
     {
       currentPlayerSymbol = player.Symbol;
     }

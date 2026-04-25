@@ -2,7 +2,7 @@ using System;
 
 namespace TicTacToe;
 
-public class Player
+public class Player : BasePlayer
 {
   #region Поля и свойства
   
@@ -13,18 +13,12 @@ public class Player
     get => _name;
     private init => _name = string.IsNullOrWhiteSpace(value) ? "EmptyMan" : value; 
   }
-  
-  private readonly char _symbol;
-  public char Symbol
-  {
-    get => _symbol;
-    private init => _symbol = value;
-  }
+
   #endregion
 
   #region Методы
 
-  public void Move(Board board)
+  public override void Move(Board board)
   {
     Console.Clear();
     if (Symbol == TicTacToe.SymbolX)
@@ -85,10 +79,9 @@ public class Player
 
   #region Конструкторы
 
-  public Player(string name, char symbol)
+  public Player(string name, char symbol) : base(symbol)
   {
     Name = name;
-    Symbol = symbol;
   }
 
   #endregion

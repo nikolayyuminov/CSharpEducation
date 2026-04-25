@@ -15,21 +15,29 @@ namespace TicTacToe;
             Console.Write("Введите имя игрока: ");
             var name = Console.ReadLine();
             char playerChar;
-            Console.Write($"Чем будешь играть?(X или 0): ");
+            Console.Write($"Чем будешь играть?({SymbolX} или {Symbol0}): ");
             do
             {
                 playerChar = Console.ReadKey().KeyChar;
                 Console.WriteLine();
                 if (playerChar != SymbolX && playerChar != Symbol0)
                 {
-                    Console.Write("Не правильный символ, введите 'X' или '0':");
+                    Console.Write($"Не правильный символ, введите {SymbolX} или {Symbol0}:");
                 }
             } while (playerChar != SymbolX && playerChar != Symbol0);
             
-            Player player = new Player(name, playerChar);
+            var player = new Player(name, playerChar);
             Console.WriteLine($"Привет, {player.Name}! Ты играешь за {player.Symbol}");
-            
-            Computer computer = new Computer(player.Symbol);
+            char computerChar;
+            if  (player.Symbol == SymbolX)
+            {
+                 computerChar = Symbol0;
+            }
+            else
+            {
+                 computerChar = SymbolX;
+            }
+            var computer = new Computer(computerChar);
             
             var board = new Board(3,3);
             
@@ -46,7 +54,7 @@ namespace TicTacToe;
                      Console.Clear();
                      Console.WriteLine("Tic Tac Toe Game");
                      board.PrintBoard();
-                     if (GameManager.CurrentPlayer == player.ToString())
+                     if (GameManager.CurrentPlayer == player)
                      {
                          Console.WriteLine($"Победил игрок {player.Name}!");
                      }
@@ -66,7 +74,7 @@ namespace TicTacToe;
                  }
                  GameManager.SwitchPlayer(player, computer);
   
-                 if (GameManager.CurrentPlayer == player.ToString())
+                 if (GameManager.CurrentPlayer == player)
                  {
                      player.Move(board);
                      Console.Write("Нажмите любую клавишу для продолжения или E для выхода из игры:");

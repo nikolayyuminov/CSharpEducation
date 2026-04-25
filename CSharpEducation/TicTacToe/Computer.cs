@@ -2,32 +2,11 @@ using System;
 
 namespace TicTacToe;
 
-public class Computer
+public class Computer : BasePlayer
 {
-  #region Поля и свойства
-  
-  private readonly char _symbol;
-  public char Symbol
-  {
-    get => _symbol;
-    private init
-    {
-      if  (value == TicTacToe.SymbolX)
-      {
-        _symbol = TicTacToe.Symbol0;
-      }
-      else
-      {
-        _symbol = TicTacToe.SymbolX;
-      }
-    }
-  }
-  
-  #endregion
-
   #region Методы
 
-  public void Move(Board board)
+  public override void Move(Board board)
   {
     Random rand = new Random();
     Console.Clear();
@@ -68,10 +47,7 @@ public class Computer
 
   #region Конструкторы
 
-  public Computer(char symbol)
-  {
-    Symbol = symbol;
-  }
+  public Computer(char symbol) : base(symbol) { }
 
   #endregion
 }
