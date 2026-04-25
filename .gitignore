@@ -131,7 +131,10 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+<<<<<<< HEAD
+=======
 
 #Rider project info
 rider.project.model.nuget.info
 rider.project.restore.info
+>>>>>>> main

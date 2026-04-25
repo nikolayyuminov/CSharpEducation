@@ -6,6 +6,8 @@ class Program
 {
   static void Main(string[] args)
   {
-    Console.WriteLine("Hello, World!");
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.Write("Hello World!");
+    Console.ResetColor();
   }
 }
