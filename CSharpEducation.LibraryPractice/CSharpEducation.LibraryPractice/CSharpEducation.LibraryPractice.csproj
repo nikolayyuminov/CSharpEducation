@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Practice4.MathHelper">
+        <HintPath>..\..\CSharpEducation.Practice\Practice4.MathHelper\bin\Release\net9.0\Practice4.MathHelper.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
