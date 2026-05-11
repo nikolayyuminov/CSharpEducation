@@ -6,6 +6,9 @@ using System.Text;
 
 namespace PhoneBook;
 
+/// <summary>
+/// Телефонная книга.
+/// </summary>
 public class Phonebook
 {
     #region Поля и свойства

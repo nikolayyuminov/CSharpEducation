@@ -1,5 +1,8 @@
 namespace PhoneBook;
 
+/// <summary>
+/// Абонент для телефонной книги.
+/// </summary>
 public class Abonent
 {
   #region Свойства
@@ -32,7 +35,7 @@ public class Abonent
   #region Конструктор
 
   /// <summary>
-  /// Конструктор для создания абонента.
+  /// Конструктор.
   /// </summary>
   /// <param name="name">Имя абонента.</param>
   /// <param name="phoneNumber">Номер телефона абонента.</param>
@@ -41,9 +44,6 @@ public class Abonent
     PhoneNumber = phoneNumber;
     Name = name;
   }
-
+  
   #endregion
-
-
-
 }

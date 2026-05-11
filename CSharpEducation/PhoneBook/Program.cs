@@ -2,6 +2,9 @@
 
 namespace PhoneBook;
 
+/// <summary>
+/// Программа для работы с телефонной книгой
+/// </summary>
 class Program
 {
     private static void Main()

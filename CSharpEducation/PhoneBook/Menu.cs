@@ -2,6 +2,9 @@ using System;
 
 namespace PhoneBook;
 
+/// <summary>
+/// Меню пользователя, для работы с телефонной книгой
+/// </summary>
 public static class Menu
 {
   /// <summary>
@@ -30,22 +33,22 @@ public static class Menu
     switch (choice)
     {
       case "1":
-        PhonebookManager.AddAbonent(phonebook);
+        ConsoleRequestManager.AddAbonent(phonebook);
         break;
       case "2":
-        PhonebookManager.ShowAllAbonents(phonebook);
+        ConsoleRequestManager.ShowAllAbonents(phonebook);
         break;
       case "3":
-        PhonebookManager.FindByPhone(phonebook);
+        ConsoleRequestManager.FindByPhone(phonebook);
         break;
       case "4":
-        PhonebookManager.FindByName(phonebook);
+        ConsoleRequestManager.FindByName(phonebook);
         break;
       case "5":
-        PhonebookManager.UpdateAbonent(phonebook);
+        ConsoleRequestManager.UpdateAbonent(phonebook);
         break;
       case "6":
-        PhonebookManager.DeleteAbonent(phonebook);
+        ConsoleRequestManager.DeleteAbonent(phonebook);
         break;
       case "0":
         Console.WriteLine("До свидания!");

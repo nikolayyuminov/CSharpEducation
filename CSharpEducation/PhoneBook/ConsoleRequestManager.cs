@@ -2,7 +2,10 @@ using System;
 
 namespace PhoneBook;
 
-public static class PhonebookManager
+/// <summary>
+/// Менеджер для обработки запросов пользователя к телефонной книге
+/// </summary>
+public static class ConsoleRequestManager
 {
     /// <summary>
     /// Добавить абонента в телефонную книгу.
