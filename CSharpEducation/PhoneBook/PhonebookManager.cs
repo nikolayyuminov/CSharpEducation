@@ -1,11 +1,13 @@
+using System;
+
 namespace PhoneBook;
 
 public static class PhonebookManager
 {
     /// <summary>
-    /// Добавить абонента в телефонную книгу
+    /// Добавить абонента в телефонную книгу.
     /// </summary>
-    /// <param name="phonebook">Телефонная книга</param>
+    /// <param name="phonebook">Телефонная книга.</param>
     public static void AddAbonent(Phonebook phonebook)
     {
         Console.Write("Введите номер телефона: ");
@@ -24,18 +26,25 @@ public static class PhonebookManager
     }
     
     /// <summary>
-    /// Показать список всех абонентов в телефонной книге
+    /// Показать список всех абонентов в телефонной книге.
     /// </summary>
-    /// <param name="phonebook">Телефонная книга</param>
+    /// <param name="phonebook">Телефонная книга.</param>
     public static void ShowAllAbonents(Phonebook phonebook)
     {
-        phonebook.ShowAllAbonents();
+        var abonents = phonebook.GetAllAbonents();
+        
+        Console.WriteLine("\n=== Телефонная книга ===");
+        foreach (var abonent in abonents)
+        {
+            Console.WriteLine(abonent);
+        }
+        Console.WriteLine($"Всего: {abonents.Count} абонентов\n");
     }
     
     /// <summary>
-    /// Найти абонента по номеру телефона
+    /// Найти абонента по номеру телефона.
     /// </summary>
-    /// <param name="phonebook">Телефонная книга</param>
+    /// <param name="phonebook">Телефонная книга.</param>
     public static void FindByPhone(Phonebook phonebook)
     {
         Console.Write("Введите номер телефона: ");
@@ -53,29 +62,22 @@ public static class PhonebookManager
     }
     
     /// <summary>
-    /// Найти номер телефона по имени
+    /// Найти номер телефона по имени.
     /// </summary>
-    /// <param name="phonebook">Телефонная книга</param>
+    /// <param name="phonebook">Телефонная книга.</param>
     public static void FindByName(Phonebook phonebook)
     {
         Console.Write("Введите имя абонента: ");
         var name = Console.ReadLine();
         
         var abonent = phonebook.GetPhoneByName(name);
-        if (abonent != null)
-        {
-            Console.WriteLine($"Найден абонент {abonent}");
-        }
-        else
-        {
-            Console.WriteLine($"Абонент с именем {name} не найден.");
-        }
+        Console.WriteLine(abonent != null ? $"Найден абонент {abonent}" : $"Абонент с именем {name} не найден.");
     }
     
     /// <summary>
-    /// Изменить данные абонента телефонной книги
+    /// Изменить данные абонента телефонной книги.
     /// </summary>
-    /// <param name="phonebook">Телефонная книга</param>
+    /// <param name="phonebook">Телефонная книга.</param>
     public static void UpdateAbonent(Phonebook phonebook)
     {
         Console.Write("Введите текущий номер телефона абонента для редактирования: ");
@@ -103,9 +105,9 @@ public static class PhonebookManager
     }
     
     /// <summary>
-    /// Удалить абонента из телефонной книги
+    /// Удалить абонента из телефонной книги.
     /// </summary>
-    /// <param name="phonebook">Телефонная книга</param>
+    /// <param name="phonebook">Телефонная книга.</param>
     public static void DeleteAbonent(Phonebook phonebook)
     {
         Console.Write("Введите номер телефона абонента для удаления: ");

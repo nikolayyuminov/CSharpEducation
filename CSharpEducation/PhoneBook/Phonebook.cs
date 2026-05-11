@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace PhoneBook;
@@ -6,39 +10,48 @@ public class Phonebook
 {
     #region Поля и свойства
 
-    private static Phonebook _phonebook;
-        
+    /// <summary>
+    /// Приватное поле для экземпляра телефонной книги.
+    /// </summary>
+    private static Phonebook _instance;
+    
+    /// <summary>
+    /// Приватное поле для списка всех абонентов телефонной книги.
+    /// </summary>
     private List<Abonent> _abonents;
     
-    // private readonly string _filePath = "D:\\Study SC\\CSharpEducation\\CSharpEducation\\PhoneBook\\phonebook.txt";
-    
+    /// <summary>
+    /// Приватное поле для хранения пути до файла со всеми абонентами.
+    /// </summary>
     private readonly string _filePath = "phonebook.txt";
     
     /// <summary>
-    /// Получить телефонную книгу
+    /// Получить телефонную книгу.
     /// </summary>
-    /// <returns>Объект класса PhoneBook</returns>
-    public static Phonebook GetPhonebook
+    /// <returns>Объект класса PhoneBook.</returns>
+    public static Phonebook Instance
     {
         get
         {
-            if (_phonebook == null)
-                _phonebook = new Phonebook();
-            return _phonebook;
+            if (_instance == null)
+                _instance = new Phonebook();
+            return _instance;
         }
     }
     
     #endregion
 
     #region Методы
+    
     /// <summary>
-    /// Загрузка данных из файла "phonebook.txt"
+    /// Загрузка данных из файла "phonebook.txt".
     /// </summary>
     private void LoadFromFile()
     {
         if (!File.Exists(_filePath))
         {
-            Console.WriteLine("Файл не найден...");
+            Console.WriteLine("Файл не найден... \n" +
+                              "Новый файл создастся при добавлении первого абонента.");
             return;
         }
         
@@ -62,11 +75,12 @@ public class Phonebook
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при загрузке файла: {ex.Message}");
+            throw;
         }
     }
         
     /// <summary>
-    /// Сохранение данных в файл "phonebook.txt"
+    /// Сохранение данных в файл "phonebook.txt".
     /// </summary>
     private void SaveToFile()
     {
@@ -79,14 +93,15 @@ public class Phonebook
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при сохранении: {ex.Message}");
+            throw;
         }
     }
             
     /// <summary>
-    /// Добавление абонента в телефонную книгу
+    /// Добавление абонента в телефонную книгу.
     /// </summary>
-    /// <param name="phoneNumber">Телефон абонента</param>
-    /// <param name="name">Имя абонента</param>
+    /// <param name="phoneNumber">Телефон абонента.</param>
+    /// <param name="name">Имя абонента.</param>
     public void AddAbonent(string phoneNumber, string name)
     {
         if (_abonents.Any(a => a.PhoneNumber == phoneNumber))
@@ -108,10 +123,10 @@ public class Phonebook
     }
     
     /// <summary>
-    /// Получить абонента по номеру телефона
+    /// Получить абонента по номеру телефона.
     /// </summary>
-    /// <param name="phoneNumber">Телефон абонента</param>
-    /// <returns></returns>
+    /// <param name="phoneNumber">Телефон абонента.</param>
+    /// <returns>Абонент телефонной книги.</returns>
     public Abonent? GetAbonentByPhone(string phoneNumber)
     {
         foreach (var abonent in _abonents)
@@ -124,10 +139,10 @@ public class Phonebook
     }
     
     /// <summary>
-    /// Получить номер телефона по имени абонента
+    /// Получить номер телефона по имени абонента.
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="name">Имя абонента.</param>
+    /// <returns>Абонент телефонной книги.</returns>
     public Abonent? GetPhoneByName(string name)
     {
         foreach (var abonent in _abonents)
@@ -140,21 +155,19 @@ public class Phonebook
     }
 
     /// <summary>
-    /// Изменить данные абонента
+    /// Изменить данные абонента.
     /// </summary>
-    /// <param name="abonent">Абонент, которого надо изменить</param>
-    /// <param name="newPhoneNumber">Новое значение телефона абонента</param>
-    /// <param name="newName">Новое значение имени абонента</param>
-    /// <returns></returns>
+    /// <param name="abonent">Абонент, которого надо изменить.</param>
+    /// <param name="newPhoneNumber">Новое значение телефона абонента.</param>
+    /// <param name="newName">Новое значение имени абонента.</param>
     public void UpdateAbonent(Abonent abonent, string newPhoneNumber, string newName)
     {
-        // Проверка, что новый номер не занят (если меняется номер)
         if (newPhoneNumber != abonent.PhoneNumber && _abonents.Any(a => a.PhoneNumber == newPhoneNumber))
         {
             Console.WriteLine($"Ошибка: Номер {newPhoneNumber} уже занят другим абонентом.");
             return;
         }
-        // Проверка, что новое имя не занято (если меняется имя)
+
         if (!abonent.Name.Equals(newName) && _abonents.Any(a => a.Name.Equals(newName)))
         {
             Console.WriteLine($"Ошибка: Имя {newName} уже используется другим абонентом.");
@@ -168,10 +181,9 @@ public class Phonebook
     }
 
     /// <summary>
-    /// Удалить абонента из телефонной книги
+    /// Удалить абонента из телефонной книги.
     /// </summary>
-    /// <param name="abonent">Абонент, которого надо удалить из телефонной книги</param>
-    /// <returns></returns>
+    /// <param name="abonent">Абонент, которого надо удалить из телефонной книги.</param>
     public void DeleteAbonent(Abonent abonent)
     {
         _abonents.Remove(abonent);
@@ -179,26 +191,21 @@ public class Phonebook
         Console.WriteLine($"Абонент {abonent.Name} удален.");
     }
     
-    // Показать всю телефонную книгу
-    public void ShowAllAbonents()
+    /// <summary>
+    /// Показать все записи телефонной книги.
+    /// </summary>
+    public List<Abonent> GetAllAbonents()
     {
-        if (_abonents.Count == 0)
-        {
-            Console.WriteLine("Телефонная книга пуста.");
-            return;
-        }
-        
-        Console.WriteLine("\n=== Телефонная книга ===");
-        foreach (var abonent in _abonents)
-        {
-            Console.WriteLine(abonent);
-        }
-        Console.WriteLine($"Всего: {_abonents.Count} абонентов\n");
+        return _abonents;
     }
     #endregion
     
     #region Конструктор
-
+    
+    /// <summary>
+    /// Создается телефонная книга из файла phonebook.txt.
+    /// Если файла нет, то создается пустой файл.
+    /// </summary>
     private Phonebook()
     {
         _abonents = new List<Abonent>();

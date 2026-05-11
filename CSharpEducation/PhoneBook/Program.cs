@@ -1,11 +1,14 @@
-﻿namespace PhoneBook;
+﻿using System;
+
+namespace PhoneBook;
 
 class Program
 {
     private static void Main()
     {
-        var phonebook = Phonebook.GetPhonebook;
-        
+        var phonebook = Phonebook.Instance;
+        Console.WriteLine("\nНажмите любую клавишу для начала работы...");
+        Console.ReadKey();
         bool isRunning = true;
 
         do

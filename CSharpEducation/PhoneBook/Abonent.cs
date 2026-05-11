@@ -4,27 +4,43 @@ public class Abonent
 {
   #region Свойства
 
-    public string PhoneNumber { get; set; }
-    public string Name { get; set; }
+  /// <summary>
+  /// Номер телефона абонента.
+  /// </summary>
+  public string PhoneNumber { get; set; }
+  
+  /// <summary>
+  /// Имя абонента.
+  /// </summary>
+  public string Name { get; set; }
 
   #endregion
 
   #region Методы
 
-    public override string ToString()
-    {
-      return $"{Name}: {PhoneNumber}";
-    }
+  /// <summary>
+  /// Отображение информации об объекте.
+  /// </summary>
+  /// <returns>Строка с именем и телефоном абонента.</returns>
+  public override string ToString()
+  {
+    return $"{Name}: {PhoneNumber}";
+  }
 
   #endregion
 
   #region Конструктор
 
-    public Abonent(string name, string phoneNumber)
-    {
-      PhoneNumber = phoneNumber;
-      Name = name;
-    }
+  /// <summary>
+  /// Конструктор для создания абонента.
+  /// </summary>
+  /// <param name="name">Имя абонента.</param>
+  /// <param name="phoneNumber">Номер телефона абонента.</param>
+  public Abonent(string name, string phoneNumber)
+  {
+    PhoneNumber = phoneNumber;
+    Name = name;
+  }
 
   #endregion
 

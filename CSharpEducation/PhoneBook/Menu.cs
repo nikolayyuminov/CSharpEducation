@@ -1,9 +1,11 @@
+using System;
+
 namespace PhoneBook;
 
 public static class Menu
 {
   /// <summary>
-  /// Отобразить меню для работы с телефонной книгой
+  /// Отобразить меню для работы с телефонной книгой.
   /// </summary>
   public static void ShowMenu()
   {
@@ -19,10 +21,10 @@ public static class Menu
   }
 
   /// <summary>
-  /// Выполнить действие, выбранное пользователем
+  /// Выполнить действие, выбранное пользователем.
   /// </summary>
-  /// <param name="choice">Выбор пользователя</param>
-  /// <param name="phonebook">Телефонная книга</param>
+  /// <param name="choice">Выбор пользователя.</param>
+  /// <param name="phonebook">Телефонная книга.</param>
   public static void SwitchChoice(string? choice, Phonebook phonebook)
   {
     switch (choice)
