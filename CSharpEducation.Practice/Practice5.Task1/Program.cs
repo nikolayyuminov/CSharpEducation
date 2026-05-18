@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Practice5.Task2;
 
 namespace Practice5.Task1;
 
@@ -32,6 +33,10 @@ class Program
         continue;
       }
       Console.WriteLine($"{emp}, {emp.CalculateBonus()}");
+      var logger = new ConsoleLogger();
+      logger.WriteLogInConsole(emp.ToString(), LogLevel.Info);
+      var fileLogger = new FileLogger();
+      fileLogger.SaveInFile(emp.ToString(), LogLevel.Info);
     }
   }
   
