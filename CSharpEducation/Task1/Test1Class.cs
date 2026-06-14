@@ -1,6 +1,12 @@
+using System;
+using System.Globalization;
+
 namespace Task1;
 
-public class Test1Class
+public class TestClass
 {
-  
+  public static void TetsMain()
+  {
+    Console.WriteLine("какая то строка");
+  }  
 }
