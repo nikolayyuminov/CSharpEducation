@@ -1,8 +1,23 @@
 {
   "version": 2,
-  "dgSpecHash": "3V1oUAuyx+c=",
+  "dgSpecHash": "Rx67M/UPntc=",
   "success": true,
   "projectFilePath": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2.Task5\\Practice2.Task5.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "expectedPackageFiles": [
+    "C:\\Users\\yuminov_ns\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.28\\microsoft.netcore.app.ref.8.0.28.nupkg.sha512",
+    "C:\\Users\\yuminov_ns\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.28\\microsoft.windowsdesktop.app.ref.8.0.28.nupkg.sha512",
+    "C:\\Users\\yuminov_ns\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.28\\microsoft.aspnetcore.app.ref.8.0.28.nupkg.sha512",
+    "C:\\Users\\yuminov_ns\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.28\\microsoft.netcore.app.host.win-x64.8.0.28.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://irtfs.directum.ru/tfs/HRPro/HRPro/_packaging/CORE/nuget/v3/index.json.",
+      "projectPath": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2.Task5\\Practice2.Task5.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\Study SC\\CSharpEducation\\CSharpEducation.Practice\\Practice2.Task5\\Practice2.Task5.csproj",
+      "targetGraphs": []
+    }
+  ]
 }
