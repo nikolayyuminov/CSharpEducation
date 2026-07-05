@@ -6,11 +6,11 @@ public class Employee
 {
   #region Поля и свойства
 
-  private static int CountId {get; set;}
+  public static int CountId {get; set;}
   /// <summary>
   /// Id сотрудника.
   /// </summary>
-  public int Id { get; set; }
+  public int Id { get; }
   /// <summary>
   /// Имя сотрудника.
   /// </summary>
@@ -58,6 +58,23 @@ public class Employee
   public Employee(string name, string position, decimal hourRate, int hoursWorked)
   {
     Id = CountId++;
+    Name = name;
+    Position = position;
+    HourRate = hourRate;
+    HoursWorked = hoursWorked;
+  }
+
+  /// <summary>
+  /// Конструктор c id.
+  /// </summary>
+  /// <param name="id">id, для загрузки из файла.</param>
+  /// <param name="name">Имя сотрудника.</param>
+  /// <param name="position">Должность сотрудника.</param>
+  /// <param name="hourRate">Часовая ставка сотрудника.</param>
+  /// <param name="hoursWorked">Количество отработанных часов.</param>
+  public Employee(int id, string name, string position, decimal hourRate, int hoursWorked)
+  {
+    Id = id;
     Name = name;
     Position = position;
     HourRate = hourRate;
