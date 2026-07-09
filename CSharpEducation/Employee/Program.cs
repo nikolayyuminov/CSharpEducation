@@ -4,56 +4,43 @@ internal static class Program
 {
   private static void Main()
   {
-    try
-    {
-      EmployeeManager.LoadFromFile();
-      ConsoleManager.Pause();
-    }
-    catch (FileNotFoundException message)
-    {
-      Console.WriteLine(message.Message);
-      ConsoleManager.Pause();
-    }
-    catch (FileLoadException ex)
-    {
-      Console.WriteLine($"Ошибка при загрузке файла: {ex.Message}");
-      ConsoleManager.Pause();
-    }
-    catch (Exception ex)
-    {
-      Console.WriteLine(ex.Message);
-      ConsoleManager.Pause();
-    }
-    
     while (true)
     {
       try
       {
         Console.Clear();
         Console.WriteLine("=== Управление сотрудниками ===");
-        Console.WriteLine("1. Добавить сотрудника");
-        Console.WriteLine("2. Показать всех сотрудников");
-        Console.WriteLine("3. Найти сотрудника");
-        Console.WriteLine("4. Обновить сотрудника");
-        Console.WriteLine("5. Рассчитать зарплату");
+        Console.WriteLine("1. Добавить полного сотрудника");
+        Console.WriteLine("2. Добавить частичного сотрудника");
+        Console.WriteLine("3. Показать всех сотрудников");
+        Console.WriteLine("4. Найти сотрудника");
+        Console.WriteLine("5. Обновить сотрудника");
+        Console.WriteLine("6. Удалить сотрудника");
+        Console.WriteLine("7. Рассчитать зарплату");
         Console.WriteLine("0. Выход");
         Console.Write("Выберите действие: ");
 
         switch (Console.ReadLine())
         {
           case "1":
-            ConsoleManager.AddEmployee();
+            ConsoleManager.AddFullTimeEmployee();
             break;
           case "2":
-            ConsoleManager.ShowEmployees();
+            ConsoleManager.AddPartTimeEmployee();
             break;
           case "3":
-            ConsoleManager.FindEmployee();
+            ConsoleManager.ShowEmployees();
             break;
           case "4":
-            ConsoleManager.UpdateEmployee();
+            ConsoleManager.FindEmployee();
             break;
           case "5":
+            ConsoleManager.UpdateEmployee();
+            break;
+          case "6":
+            ConsoleManager.DeleteEmployee();
+            break;
+          case "7":
             ConsoleManager.CalculateSalary();
             break;
           case "0":

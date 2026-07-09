@@ -1,128 +1,105 @@
-using System.Text;
 
 namespace Employee;
 /// <summary>
 /// Управление сотрудником.
 /// </summary>
-public static class EmployeeManager
+public class EmployeeManager<T> : IEmployeeManager<T> where T : Employee
 {
     #region Поля и свойства
 
     /// <summary>
     /// Коллекция для работы со списком сотрудников.
     /// </summary>
-    public static readonly List<Employee>? Employees = [];
-
+    private readonly List<T?> _employees = [];
+    
     /// <summary>
-    /// Файл хранения списка всех сотрудников.
+    /// Значение id, для создания нового сотрудника
     /// </summary>
-    private const string? FilePath = "Employee.txt";
+    private int IdMax => _employees.Count + 1;
 
     #endregion
 
     #region Методы
 
     /// <summary>
-    /// Загрузка данных из файла "Employee.txt".
+    /// Добавление нового сотрудника в коллекцию.
     /// </summary>
-    public static void LoadFromFile()
+    /// <param name="employee">Сотрудник.</param>
+    public void Add(T employee)
     {
-        if (!File.Exists(FilePath))
-        {
-            throw new FileNotFoundException("Файл не найден... \n" +
-                                            "Новый файл создастся при добавлении первого сотрудника.");
-        }
-        var lines = File.ReadAllLines(FilePath, Encoding.UTF8);
-        foreach (var line in lines)
-        {
-            if (string.IsNullOrWhiteSpace(line))
-                throw new InvalidOperationException("Файл пуст...");
-                
-            var parts = line.Split(':');
-            var id = int.Parse(parts[0].Trim());
-            var name =  parts[1].Trim();
-            var position = parts[2].Trim();
-            var hourRate = decimal.Parse(parts[3].Trim());
-            var hoursWorked = int.Parse(parts[4].Trim());
-            
-            Employees?.Add(new Employee(id, name, position, hourRate, hoursWorked));
-            
-        }
-
-        if (Employees == null) throw new NullReferenceException("Список сотрудников не существует");
-        var lastId = Employees.Max(emp => emp.Id);
-        Employee.CountId = lastId + 1;
-        Console.WriteLine($"Загружено {Employees.Count} сотрудников из файла.");
-
-    }
-        
-    /// <summary>
-    /// Сохранение данных в файл "Employee.txt".
-    /// </summary>
-    private static void SaveToFile()
-    {
-        try
-        {
-            if (Employees == null) throw new NullReferenceException("Ошибка при сохранении");
-            
-            var lines = Employees.Select(e => $"{e.Id}:{e.Name} : {e.Position} : {e.HourRate} : {e.HoursWorked}");
-            File.WriteAllLines(FilePath, lines, Encoding.UTF8);
-
-            Console.WriteLine("Данные сохранены в файл.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Ошибка при сохранении: {ex.Message}");
-            throw;
-        }
-    }
-
-    /// <summary>
-    ///Добавление нового сотрудника.
-    /// </summary>
-    public static void AddNewEmployee(string name, string position, decimal hourRate, int hoursWorked)
-    {
-        var emp = new Employee(name, position, hourRate, hoursWorked);
-
-        if (Employees != null) Employees.Add(emp);
-        else throw new NullReferenceException("Список сотрудников не существует");
-        SaveToFile();
+        if (employee.Id < IdMax) throw new IdAlreadyExistException($"ИД с номером {employee.Id} уже существует");
+        _employees.Add(employee);
     }
     
-    public static Employee? FindEmployeeByName(string name)
+    /// <summary>
+    ///Создание нового полного сотрудника.
+    /// </summary>
+    public FullTimeEmployee CreateNewEmployee(string name, decimal salary)
     {
-        if  (Employees == null) throw new NullReferenceException("Список сотрудников не существует");
-        var emp = Employees.FirstOrDefault(e => e.Name.Equals(name));
+        var emp = new FullTimeEmployee(IdMax, name, salary);
         return emp;
+    }
+    
+    /// <summary>
+    ///Добавление нового частичного сотрудника.
+    /// </summary>
+    public PartTimeEmployee CreateNewEmployee(string name, decimal salary, int hoursWorked) 
+    {
+        var emp = new PartTimeEmployee(IdMax, name, salary,  hoursWorked);
+        return emp;
+    }
+    
+    /// <summary>
+    /// Получить сотрудника по имени.
+    /// </summary>
+    /// <param name="name">Имя сотрудника.</param>
+    /// <returns>Сотрудник.</returns>
+    /// <exception cref="NullReferenceException">Списка сотрудников не существует.</exception>
+    public T? Get(string name)
+    {
+        if  (_employees == null) throw new NullReferenceException("Список сотрудников не существует");
+        var emp = _employees.FirstOrDefault(e => e.Name.Equals(name));
+        return emp ?? throw new IdNotFoundException($"Сотрудника с ИД {emp.Id} Не существует");
     }
 
     /// <summary>
     /// Изменить данные сотрудника
     /// </summary>
-    public static void UpdateEmployee(Employee emp, string newName, string newPosition, decimal newHourRate, int newHoursWorked)
+    /// <param name="emp">Сотрудник</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void Update(T emp)
     {
+        Console.Write("Новое имя: ");
+        var newName = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
         if (newName.Equals(string.Empty)) throw new ArgumentNullException(newName,"Новое имя не может быть пустым");
         if (!newName.Equals(emp.Name)) emp.Name = newName;
     
-        
-        if (newPosition.Equals(string.Empty)) throw new ArgumentNullException(newPosition, "Новая должность не может быть пустой"); 
-        if (!newPosition.Equals(emp.Position)) emp.Position = newPosition;
+        Console.Write("Новая базовая зарплата: ");
+        var newSalary = 
+            decimal.Parse(Console.ReadLine() ?? throw new InvalidOperationException("Зарплата не может быть пустой"));
+        if (newSalary != emp.BaseSalary) emp.BaseSalary = newSalary;
 
-        if (newHourRate != emp.HoursWorked) emp.HourRate = newHourRate;
-
-        if (newHoursWorked != emp.HoursWorked) emp.HoursWorked = newHoursWorked;
-        
-        SaveToFile();
+        if (emp is not PartTimeEmployee partTimeEmp) return;
+        Console.Write("Новое количество часов: ");
+        var newHoursWorked =
+            int.Parse(Console.ReadLine() ??
+                      throw new InvalidOperationException("Количество отработанных часов не может быть пустым"));
+        if (newHoursWorked != partTimeEmp.HoursWorked) partTimeEmp.HoursWorked = newHoursWorked;
     }
 
-    /// <summary>
-    /// Рассчитать зарплату сотрудника.
-    /// </summary>
-    /// <returns>Зарплата сотрудника.</returns>
-    public static decimal CalculateSalary(Employee? emp)
+    public List<T?> GetAll()
     {
-        if (emp != null) return emp.HourRate * emp.HoursWorked;
-        throw new NullReferenceException("Сотрудник не найден");
+        if (_employees == null)
+            throw new NullReferenceException("Список сотрудников пуст.");
+
+        return _employees.Count == 0 ? throw new NullReferenceException("Количество сотрудников '0'") : _employees;
     }
+    
+    public void DeleteEmployee(T emp)
+    {
+        if (emp.Id > IdMax) throw new IdNotFoundException($"Пользователя с {emp.Id} не существует");
+        _employees.Remove(emp);
+    }
+    
     #endregion
 }

@@ -5,29 +5,49 @@ namespace Employee;
 public static class ConsoleManager
 {
   /// <summary>
-  /// Консольные запросы для добавления нового сотрудника.
+  /// Консольные запросы для добавления нового полного сотрудника.
   /// </summary>
-  public static void AddEmployee()
+  public static void AddFullTimeEmployee()
   {
     Console.Write("Имя: ");
     var name = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
     if (name.Trim() == string.Empty) throw new InvalidOperationException("Имя не может быть пустым");
 
-    Console.Write("Должность: ");
-    var position = Console.ReadLine() ?? throw new InvalidOperationException("Должность не может быть пустой");
-    if (position.Trim() == string.Empty) throw new InvalidOperationException("Должность не может быть пустой");
+    Console.Write("Зарплата: ");
+    var salary = 
+      decimal.Parse(Console.ReadLine() ?? throw new InvalidOperationException("Зарплата не может быть пустой"));
+    
+    var empMan = new EmployeeManager<FullTimeEmployee>();
+    
+    var newFullTimeEmp = empMan.CreateNewEmployee(name,  salary);
+    empMan.Add(newFullTimeEmp);
 
-    Console.Write("Почасовая ставка: ");
-    var hourRate = decimal.Parse(Console.ReadLine() ?? 
-                                 throw new InvalidOperationException("Часовая ставка не может быть пустой"));
-
+    Console.WriteLine("Сотрудник успешно добавлен.");
+    Pause();
+  }
+  
+  /// <summary>
+  /// Консольные запросы для добавления нового частичного сотрудника.
+  /// </summary>
+  public static void AddPartTimeEmployee()
+  {
+    Console.Write("Имя: ");
+    var name = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
+    if (name.Trim() == string.Empty) throw new InvalidOperationException("Имя не может быть пустым");
 
     Console.Write("Количество часов: ");
     var hoursWorked = 
       int.Parse(Console.ReadLine() ?? 
-          throw new InvalidOperationException("Количество отработанных часов не может быть пустым"));
+                throw new InvalidOperationException("Количество отработанных часов не может быть пустым"));
     
-    EmployeeManager.AddNewEmployee(name, position, hourRate, hoursWorked);
+    Console.Write("Базовая зарплата: ");
+    var salary = 
+      decimal.Parse(Console.ReadLine() ?? throw new InvalidOperationException("Зарплата не может быть пустой"));
+    
+    var empMan = new EmployeeManager<PartTimeEmployee>();
+    
+    var newPartTimeEmp = empMan.CreateNewEmployee(name,  salary, hoursWorked);
+    empMan.Add(newPartTimeEmp);
 
     Console.WriteLine("Сотрудник успешно добавлен.");
     Pause();
@@ -38,13 +58,11 @@ public static class ConsoleManager
   /// </summary>
   public static void ShowEmployees()
   {
-    if (EmployeeManager.Employees == null)
-      throw new NullReferenceException("Список сотрудников пуст.");
-
-    if (EmployeeManager.Employees.Count == 0)
-      throw new NullReferenceException("Количество сотрудников '0'");
+ 
+    var empMan = new EmployeeManager<Employee>();
+    var allEmployees = empMan.GetAll();
     
-    foreach (var emp in EmployeeManager.Employees)
+    foreach (var emp in allEmployees)
     {
       Console.WriteLine(emp);
       Console.WriteLine(new string('-', 30));
@@ -63,7 +81,8 @@ public static class ConsoleManager
     var name = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
     Console.WriteLine();
     
-    var emp = EmployeeManager.FindEmployeeByName(name);
+    var emps = new EmployeeManager<Employee>();
+    var emp = emps.Get(name);
 
     if (emp == null) throw new NullReferenceException("Сотрудник не найден.");
     Console.WriteLine(emp);
@@ -72,31 +91,15 @@ public static class ConsoleManager
   }
   
   /// <summary>
-  /// Консольные запросы для изменения данных сотрудника.
+  /// Изменение данных сотрудника.
   /// </summary>
   public static void UpdateEmployee()
   {
+    var emps = new EmployeeManager<Employee>();
+    
     var emp = FindEmployee();
     if (emp == null) throw new NullReferenceException("Сотрудник не найден");
-
-    Console.Write("Новое имя: ");
-    var newName = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
-    if (newName == string.Empty) throw new InvalidOperationException("Имя не может быть пустым");
-    
-    Console.Write("Новая должность: ");
-    var newPosition = Console.ReadLine() ?? throw new InvalidOperationException("Должность не может быть пустой");
-    if (newPosition == string.Empty) throw new InvalidOperationException("Должность не может быть пустой");
-    
-    Console.Write("Новая часовая ставка: ");
-    var newHourRate = decimal.Parse(Console.ReadLine() ?? 
-                                    throw new InvalidOperationException("Часовая ставка не может быть пустой"));
-    
-    Console.Write("Новое количество отработанных часов: ");
-    var newHoursWorked = 
-      int.Parse(Console.ReadLine() ?? 
-          throw new InvalidOperationException("Количество отработанных часов не может быть пустым"));
-    
-    EmployeeManager.UpdateEmployee(emp, newName, newPosition, newHourRate, newHoursWorked);
+    emps.Update(emp);
     
     Console.WriteLine("Данные обновлены.");
     Pause();
@@ -110,7 +113,7 @@ public static class ConsoleManager
     var emp = FindEmployee();
     if (emp == null) throw new NullReferenceException("Сотрудник не найден");
     
-    var salary = EmployeeManager.CalculateSalary(emp);
+    var salary = emp.CalculateSalary();
 
     Console.WriteLine($"Зарплата сотрудника {emp.Name}: {salary}");
     Pause();
@@ -125,6 +128,11 @@ public static class ConsoleManager
     Console.ReadKey();
   }
 
-
-
+  public static void DeleteEmployee()
+  {
+    var empMan = new EmployeeManager<Employee>();
+    var emp = FindEmployee();
+    
+    empMan.DeleteEmployee(emp);
+  }
 }
