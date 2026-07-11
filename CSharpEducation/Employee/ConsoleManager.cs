@@ -10,8 +10,8 @@ public static class ConsoleManager
   public static void AddFullTimeEmployee()
   {
     Console.Write("Имя: ");
-    var name = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
-    if (name.Trim() == string.Empty) throw new InvalidOperationException("Имя не может быть пустым");
+    var name = Console.ReadLine();
+    if (name == null || name.Trim().Equals(string.Empty)) throw new InvalidOperationException("Имя не может быть пустым");
 
     Console.Write("Зарплата: ");
     var salary = 
@@ -32,8 +32,8 @@ public static class ConsoleManager
   public static void AddPartTimeEmployee()
   {
     Console.Write("Имя: ");
-    var name = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
-    if (name.Trim() == string.Empty) throw new InvalidOperationException("Имя не может быть пустым");
+    var name = Console.ReadLine();
+    if (name == null || name.Trim().Equals(string.Empty)) throw new InvalidOperationException("Имя не может быть пустым");
 
     Console.Write("Количество часов: ");
     var hoursWorked = 
@@ -127,7 +127,10 @@ public static class ConsoleManager
     Console.WriteLine("\nНажмите любую клавишу...");
     Console.ReadKey();
   }
-
+  
+  /// <summary>
+  /// Удаление сотрудника.
+  /// </summary>
   public static void DeleteEmployee()
   {
     var empMan = new EmployeeManager<Employee>();

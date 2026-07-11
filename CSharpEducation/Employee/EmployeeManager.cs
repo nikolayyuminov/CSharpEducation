@@ -58,7 +58,7 @@ public class EmployeeManager<T> : IEmployeeManager<T> where T : Employee
     public T? Get(string name)
     {
         if  (_employees == null) throw new NullReferenceException("Список сотрудников не существует");
-        var emp = _employees.FirstOrDefault(e => e.Name.Equals(name));
+        var emp = _employees.FirstOrDefault(e => e != null && e.Name.Equals(name));
         return emp ?? throw new IdNotFoundException($"Сотрудника с ИД {emp.Id} Не существует");
     }
 
@@ -70,8 +70,8 @@ public class EmployeeManager<T> : IEmployeeManager<T> where T : Employee
     public void Update(T emp)
     {
         Console.Write("Новое имя: ");
-        var newName = Console.ReadLine() ?? throw new InvalidOperationException("Имя не может быть пустым");
-        if (newName.Equals(string.Empty)) throw new ArgumentNullException(newName,"Новое имя не может быть пустым");
+        var newName = Console.ReadLine();
+        if (newName == null || newName.Equals(string.Empty)) throw new ArgumentNullException(newName,"Новое имя не может быть пустым");
         if (!newName.Equals(emp.Name)) emp.Name = newName;
     
         Console.Write("Новая базовая зарплата: ");
@@ -86,15 +86,25 @@ public class EmployeeManager<T> : IEmployeeManager<T> where T : Employee
                       throw new InvalidOperationException("Количество отработанных часов не может быть пустым"));
         if (newHoursWorked != partTimeEmp.HoursWorked) partTimeEmp.HoursWorked = newHoursWorked;
     }
-
+    
+    /// <summary>
+    /// Получить всех сотрудников.
+    /// </summary>
+    /// <returns>Список сотрудников.</returns>
+    /// <exception cref="NullReferenceException">Список сотрудников не существует или список пуст.</exception>
     public List<T?> GetAll()
     {
         if (_employees == null)
-            throw new NullReferenceException("Список сотрудников пуст.");
+            throw new NullReferenceException("Список сотрудников не существует.");
 
         return _employees.Count == 0 ? throw new NullReferenceException("Количество сотрудников '0'") : _employees;
     }
     
+    /// <summary>
+    /// Удаление сотрудника.
+    /// </summary>
+    /// <param name="emp">Сотрудник.</param>
+    /// <exception cref="IdNotFoundException">Пользователя не существует.</exception>
     public void DeleteEmployee(T emp)
     {
         if (emp.Id > IdMax) throw new IdNotFoundException($"Пользователя с {emp.Id} не существует");

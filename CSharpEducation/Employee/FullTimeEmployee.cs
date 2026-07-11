@@ -1,5 +1,7 @@
 namespace Employee;
-
+/// <summary>
+/// Полный сотрудник.
+/// </summary>
 public class FullTimeEmployee: Employee
 {
   #region Поля и свойства
@@ -22,7 +24,10 @@ public class FullTimeEmployee: Employee
   #endregion
   
   #region Методы
-
+  /// <summary>
+  /// Расчет зарплаты.
+  /// </summary>
+  /// <returns>Зарплата сотрудника.</returns>
   public override decimal CalculateSalary()
   {
     return BaseSalary;
@@ -31,7 +36,12 @@ public class FullTimeEmployee: Employee
   #endregion
   
   #region Конструкторы
-  
+  /// <summary>
+  /// Конструктор полного сотрудника.
+  /// </summary>
+  /// <param name="id">Id нового сотрудника.</param>
+  /// <param name="name">Имя.</param>
+  /// <param name="salary">Зарплата.</param>
   public FullTimeEmployee(int id, string name, decimal salary) : base(id, name, salary)
   {
   }

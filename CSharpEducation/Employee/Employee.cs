@@ -40,8 +40,13 @@ public abstract class Employee
   #endregion
 
   #region Конструкторы
-
-  public Employee(int id, string name,  decimal salary)
+  /// <summary>
+  /// Конструктор базового сотрудника.
+  /// </summary>
+  /// <param name="id">Id нового сотрудника.</param>
+  /// <param name="name">Имя.</param>
+  /// <param name="salary">Базовая зарплата.</param>
+  protected Employee(int id, string name,  decimal salary)
   {
     Id = id;
     Name = name;
