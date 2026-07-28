@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Abstractions.Validation;
 using FinanceTracker.Application.Accounts.Commands;
 using FinanceTracker.Application.Common.Validation;
 using FinanceTracker.Domain.Enums;
@@ -7,7 +8,7 @@ namespace FinanceTracker.Application.Accounts.Validators;
 /// <summary>
 /// Валидация при создании нового счета. 
 /// </summary>
-public class CreateAccountValidator
+public class CreateAccountValidator : IValidator<CreateAccountCommand>
 {
   #region Методы
   
