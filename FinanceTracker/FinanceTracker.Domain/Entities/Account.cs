@@ -2,6 +2,9 @@ using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Domain.Entities;
 
+/// <summary>
+/// Счет.
+/// </summary>
 public class Account
 {
   #region Поля и свойства
@@ -36,7 +39,7 @@ public class Account
     public Currency Currency { get; private set; }
     
     /// <summary>
-    /// Кредитный лимит, если счет кредитный
+    /// Кредитный лимит, если счет кредитный.
     /// </summary>
     public decimal? CreditLimit { get; private set; }
     
@@ -56,7 +59,8 @@ public class Account
   /// <exception cref="NullReferenceException">Ошибка если имя не указано.</exception>
   public void Rename(string newName)
   {
-    if (string.IsNullOrWhiteSpace(newName)) throw new ArgumentNullException(newName, "Имя не может быть пустым.");
+    if (string.IsNullOrWhiteSpace(newName)) throw new InvalidOperationException("Имя не может быть пустым.");
+    if (newName.Equals(Name)) return;
     Name = newName;
   }
   
@@ -65,7 +69,7 @@ public class Account
   /// </summary>
   public void Close()
   {
-    if (IsClosed == true) return;
+    if (IsClosed == true) throw new InvalidOperationException("Счет уже закрыт.");
     IsClosed = true;
   }
   
@@ -97,17 +101,16 @@ public class Account
     decimal? creditLimit = null, decimal balance = 0)
   {
     UserId = userId;
-    Rename(name);
     AccountType = accountType;
+    Currency = currency;
+    Rename(name);
     if (accountType == AccountType.Credit) ChangeCreditLimit(creditLimit);
     if (accountType != AccountType.Credit) Balance = balance >=0 ? balance : throw new InvalidOperationException("Баланс не может быть отрицательным, если счет не кредитный.");
     else if (Math.Abs(balance) > CreditLimit)
       throw new InvalidOperationException("Баланс кредитного счета не может быть ниже установленного лимита.");
     else Balance = balance;
-    Currency = currency;
     IsClosed = false;
   }
 
   #endregion
-
 }
