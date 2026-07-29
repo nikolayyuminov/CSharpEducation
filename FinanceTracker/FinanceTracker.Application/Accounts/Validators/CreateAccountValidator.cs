@@ -16,7 +16,7 @@ public class CreateAccountValidator : IValidator<CreateAccountCommand>
   /// Основной метод валидации для вызова конкретной валидации.
   /// </summary>
   /// <param name="command">Команда от пользователя для создания нового счета.</param>
-  /// <returns></returns>
+  /// <returns>Коллекция сообщений об ошибках.</returns>
   public ValidationResult Validate(CreateAccountCommand command)
   {
     var result = new ValidationResult();

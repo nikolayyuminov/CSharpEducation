@@ -40,7 +40,17 @@ public class AccountRepository : IAccountRepository
       _accounts.Add(account);
     }
 
-  #endregion
+    /// <summary>
+    /// Получение счета по Id.
+    /// </summary>
+    /// <param name="accountId">Id счета.</param>
+    /// <returns>Найденный счет или null, если счет не существует.</returns>
+    public Account? GetById(long accountId)
+    {
+      return _accounts.FirstOrDefault(x => x.Id == accountId);
+    }
+
+    #endregion
 
   #region Конструктор
 

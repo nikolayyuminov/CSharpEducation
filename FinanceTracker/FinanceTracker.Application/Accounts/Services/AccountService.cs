@@ -4,7 +4,6 @@ using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
 using FinanceTracker.Application.Accounts.Commands;
 using FinanceTracker.Application.Common.Validation;
-using FinanceTracker.Application.Factories;
 
 
 namespace FinanceTracker.Application.Accounts.Services;
@@ -24,7 +23,12 @@ public class AccountService : IAccountService
   /// <summary>
   /// Валидатор создания счета.
   /// </summary>
-  private readonly IValidator<CreateAccountCommand> _validator;
+  private readonly IValidator<CreateAccountCommand> _createAccountValidator;
+  
+  /// <summary>
+  /// Валидатор перевода средств.
+  /// </summary>
+  private readonly IValidator<TransferMoneyCommand> _transferMoneyValidator;
   
   /// <summary>
   /// Фабрика для создания счета.
@@ -42,7 +46,7 @@ public class AccountService : IAccountService
   /// <returns>Ошибки при создании. Если ошибок нет, счет создался успешно.</returns>
   public ValidationResult CreateAccount(CreateAccountCommand command)
   {
-    var result = _validator.Validate(command);
+    var result = _createAccountValidator.Validate(command);
 
     if (result.HasErrors)
     {
@@ -70,12 +74,12 @@ public class AccountService : IAccountService
   /// Конструктор.
   /// </summary>
   /// <param name="accountRepository">Репозиторий счетов.</param>
-  /// <param name="validator">Валидатор создания счета.</param>
+  /// <param name="createAccountValidator">Валидатор создания счета.</param>
   /// <param name="accountFactory">Фабрика для создания счета.</param>
-  public AccountService(IAccountRepository accountRepository, IValidator<CreateAccountCommand> validator, IAccountFactory accountFactory)
+  public AccountService(IAccountRepository accountRepository, IValidator<CreateAccountCommand> createAccountValidator, IAccountFactory accountFactory)
   {
     _accountRepository = accountRepository;
-    _validator = validator;
+    _createAccountValidator = createAccountValidator;
     _accountFactory = accountFactory;
   }
 

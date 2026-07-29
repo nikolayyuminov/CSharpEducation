@@ -39,7 +39,8 @@ public class AccountServiceTests
   public void Setup()
   {
     _accountRepository = new AccountRepository();
-    _accountService = new AccountService(_accountRepository, new CreateAccountValidator(), new AccountFactory());
+    _accountFactory = new AccountFactory();
+    _accountService = new AccountService(_accountRepository, new CreateAccountValidator(), _accountFactory);
   }
   
   [Test]

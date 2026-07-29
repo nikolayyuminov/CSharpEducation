@@ -3,9 +3,9 @@ using FinanceTracker.Domain.Enums;
 namespace FinanceTracker.Domain.Entities;
 
 /// <summary>
-/// Счет.
+/// Абстрактный счет.
 /// </summary>
-public class Account
+public abstract class Account
 {
   #region Поля и свойства
     /// <summary>
@@ -31,17 +31,12 @@ public class Account
     /// <summary>
     /// Значение баланса.
     /// </summary>
-    public decimal Balance { get; private set; }
+    public decimal Balance { get; protected set; }
     
     /// <summary>
     /// Валюта, в которой измеряется баланс счета.
     /// </summary>
     public Currency Currency { get; private set; }
-    
-    /// <summary>
-    /// Кредитный лимит, если счет кредитный.
-    /// </summary>
-    public decimal? CreditLimit { get; private set; }
     
     /// <summary>
     /// Состояние счета (Открытый/Закрытый).
@@ -56,10 +51,11 @@ public class Account
   /// Изменить имя счета.
   /// </summary>
   /// <param name="newName">Новое имя счета.</param>
-  /// <exception cref="NullReferenceException">Ошибка если имя не указано.</exception>
+  /// <exception cref="NullReferenceException">Имя счета не может быть пустым.</exception>
   public void Rename(string newName)
   {
-    if (string.IsNullOrWhiteSpace(newName)) throw new InvalidOperationException("Имя не может быть пустым.");
+    EnsureAccountIsOpen();
+    if (string.IsNullOrWhiteSpace(newName)) throw new InvalidOperationException("Имя счета не может быть пустым.");
     if (newName.Equals(Name)) return;
     Name = newName;
   }
@@ -72,18 +68,42 @@ public class Account
     if (IsClosed == true) throw new InvalidOperationException("Счет уже закрыт.");
     IsClosed = true;
   }
+
+  /// <summary>
+  /// Проверка закрытости счета.
+  /// </summary>
+  /// <exception cref="InvalidOperationException">Нельзя выполнять операции с закрытым счетом.</exception>
+  protected void EnsureAccountIsOpen()
+  {
+    if (IsClosed) throw new InvalidOperationException("Нельзя выполнять операции с закрытым счетом.");
+  }
   
   /// <summary>
-  /// Изменить кредитный лимит.
+  /// Проверка положительного значения суммы.
   /// </summary>
-  /// <param name="newLimit">Значение нового лимита.</param>
-  public void ChangeCreditLimit(decimal? newLimit)
+  /// <param name="amount">Значение суммы.</param>
+  /// <exception cref="InvalidOperationException">Сумма не может быть отрицательной.</exception>
+  protected void EnsurePositiveAmount(decimal amount)
   {
-    if (this.AccountType != AccountType.Credit) throw new InvalidOperationException("Для установки кредитного лимита, счет должен быть кредитным.");
-    if (newLimit == null) throw new InvalidOperationException("Кредитный лимит не может быть пустым для кредитного счета.");
-    if (newLimit < 0) throw new InvalidOperationException("Кредитный лимит не может быть меньше '0'.");
-    CreditLimit = newLimit;
+    if (amount <= 0) throw new InvalidOperationException("Сумма не может быть отрицательной или равна нулю.");
   }
+
+  /// <summary>
+  /// Добавить сумму на счет.
+  /// </summary>
+  /// <param name="amount">Значение суммы.</param>
+  public virtual void Deposit(decimal amount)
+  {
+    EnsureAccountIsOpen();
+    EnsurePositiveAmount(amount);
+    Balance += amount;
+  }
+
+  /// <summary>
+  /// Вычесть сумму со счета.
+  /// </summary>
+  /// <param name="amount">Значение суммы.</param>
+  public abstract void Withdraw(decimal amount);
 
   #endregion
 
@@ -95,20 +115,12 @@ public class Account
   /// <param name="name">Имя счета.</param>
   /// <param name="accountType">Тип счета.</param>
   /// <param name="currency">Валюта счета.</param>
-  /// <param name="creditLimit">Кредитный лимит, если счет кредитный, для остальных по умолчанию null.</param>
-  /// <param name="balance">Текущий баланс счета, по умолчанию '0'.</param>
-  public Account(long userId, string name, AccountType accountType, Currency currency,
-    decimal? creditLimit = null, decimal balance = 0)
+  public Account(long userId, string name, AccountType accountType, Currency currency)
   {
     UserId = userId;
     AccountType = accountType;
     Currency = currency;
     Rename(name);
-    if (accountType == AccountType.Credit) ChangeCreditLimit(creditLimit);
-    if (accountType != AccountType.Credit) Balance = balance >=0 ? balance : throw new InvalidOperationException("Баланс не может быть отрицательным, если счет не кредитный.");
-    else if (Math.Abs(balance) > CreditLimit)
-      throw new InvalidOperationException("Баланс кредитного счета не может быть ниже установленного лимита.");
-    else Balance = balance;
     IsClosed = false;
   }
 

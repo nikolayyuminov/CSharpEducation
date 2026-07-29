@@ -20,4 +20,11 @@ public interface IAccountRepository
   /// </summary>
   /// <param name="account">Счет.</param>
   public void Add(Account account);
+  
+  /// <summary>
+  /// Получение счета по Id.
+  /// </summary>
+  /// <param name="accountId">Id счета.</param>
+  /// <returns>Найденный счет или null, если счет не существует.</returns>
+  Account? GetById(long accountId);
 }
