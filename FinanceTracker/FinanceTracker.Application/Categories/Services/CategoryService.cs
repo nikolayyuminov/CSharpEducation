@@ -23,6 +23,21 @@ public class CategoryService : ICategoryService
   /// Валидатор создания новой категории.
   /// </summary>
   private readonly IValidator<CreateCategoryCommand> _createCategoryValidator;
+  
+  /// <summary>
+  /// Валидатор переименования категории.
+  /// </summary>
+  private readonly IValidator<RenameCategoryCommand> _renameCategoryValidator;
+  
+  /// <summary>
+  /// Валидатор архивирования категории.
+  /// </summary>
+  private readonly IValidator<ArchiveCategoryCommand> _archiveCategoryValidator;
+  
+  /// <summary>
+  /// Валидатор изменения описания категории.
+  /// </summary>
+  private readonly IValidator<ChangeDescriptionCommand> _changeDescriptionCategoryValidator;
 
   #endregion
 
@@ -54,15 +69,100 @@ public class CategoryService : ICategoryService
     return validationResult;
   }
 
+  /// <summary>
+  /// Переименовать категорию.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на переименование категории.</param>
+  /// <returns>Ошибки при переименовании. Если ошибок нет, категория переименовалась успешно.</returns>
+  public ValidationResult RenameCategory(RenameCategoryCommand command)
+  {
+    var validationResult = _renameCategoryValidator.Validate(command);
+    
+    if (validationResult.HasErrors) return validationResult;
+    
+    var category = _categoryRepository.GetById(command.CategoryId);
+
+    if (category == null)
+    {
+      validationResult.AddError(new ValidationError(nameof(command.CategoryId), "Категория не найдена."));
+      return  validationResult;
+    }
+    
+    var existingCategory  = _categoryRepository.GetByName(command.UserId, command.NewName!);
+    
+    if (existingCategory != null && existingCategory.Id != category.Id)
+    {
+      validationResult.AddError(new ValidationError(nameof(command.NewName), "Категория с таким именем уже существует."));
+      return validationResult;
+    }
+    
+    category.Rename(command.NewName!);
+    
+    return validationResult;
+  }
+
+  /// <summary>
+  /// Архивирование категории.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на архивирование категории.</param>
+  /// <returns>Ошибки при переименовании. Если ошибок нет, категория архивировалась успешно.</returns>
+  public ValidationResult ArchiveCategory(ArchiveCategoryCommand command)
+  {
+    var validationResult = _archiveCategoryValidator.Validate(command);
+    
+    if (validationResult.HasErrors) return validationResult;
+    
+    var category = _categoryRepository.GetById(command.CategoryId);
+    if (category == null)
+    {
+      validationResult.AddError(new ValidationError(nameof(command.CategoryId), "Категория не найдена."));
+      return validationResult;
+    }
+    
+    category.Archive();
+    
+    return validationResult;
+  }
+
+  /// <summary>
+  /// Изменение описания категории.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на изменение описания категории.</param>
+  /// <returns>Ошибки при изменении описания. Если ошибок нет, описание изменено успешно.</returns>
+  public ValidationResult ChangeDescriptionCategory(ChangeDescriptionCommand command)
+  {
+    var validationResult = _changeDescriptionCategoryValidator.Validate(command);
+    
+    if (validationResult.HasErrors) return validationResult;
+    
+    var category = _categoryRepository.GetById(command.CategoryId);
+
+    if (category == null)
+    {
+      validationResult.AddError(new ValidationError(nameof(command.CategoryId), "Категория не существует."));
+      return  validationResult;
+    }
+    
+    category.ChangeDescription(command.NewDescription);
+    
+    return validationResult;
+  }
+
   #endregion
 
   #region Конструкторы
 
   public CategoryService(ICategoryRepository categoryRepository, 
-                          IValidator<CreateCategoryCommand> createCategoryValidator)
+                          IValidator<CreateCategoryCommand> createCategoryValidator, 
+                          IValidator<RenameCategoryCommand> renameCategoryValidator, 
+                          IValidator<ArchiveCategoryCommand> archiveCategoryValidator, 
+                          IValidator<ChangeDescriptionCommand> changeDescriptionCategoryValidator)
   {
     _categoryRepository = categoryRepository;
     _createCategoryValidator = createCategoryValidator;
+    _renameCategoryValidator = renameCategoryValidator;
+    _archiveCategoryValidator = archiveCategoryValidator;
+    _changeDescriptionCategoryValidator = changeDescriptionCategoryValidator;
   }
 
   #endregion
