@@ -4,6 +4,8 @@ using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
 using FinanceTracker.Application.Accounts.Commands;
 using FinanceTracker.Application.Common.Validation;
+using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Enums;
 
 
 namespace FinanceTracker.Application.Accounts.Services;
@@ -29,6 +31,11 @@ public class AccountService : IAccountService
   /// Валидатор переименования счета.
   /// </summary>
   private readonly IValidator<RenameAccountCommand> _renameAccountValidator;
+  
+  /// <summary>
+  /// Валидатор закрытия счета.
+  /// </summary>
+  private readonly IValidator<CloseAccountCommand> _closeAccountValidator;
   
   /// <summary>
   /// Фабрика для создания счета.
@@ -69,7 +76,7 @@ public class AccountService : IAccountService
   }
 
   /// <summary>
-  /// Переименование счета.
+  /// Переименовать счет.
   /// </summary>
   /// <param name="command">Команда от пользователя на переименование счета.</param>
   /// <returns>Ошибки при переименовании. Если ошибок нет, счет переименовался успешно.</returns>
@@ -102,7 +109,42 @@ public class AccountService : IAccountService
     
     return result;
   }
+
+  /// TODO
+  /// Перенести проверки возможности закрытия счета в доменную модель, вместе с рефакторингом Exception.
+  /// <summary>
+  /// Закрыть счет.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на закрытие счета.</param>
+  /// <returns>Ошибки при закрытии. Если ошибок нет, счет закрыт.</returns>
+  public ValidationResult CloseAccount(CloseAccountCommand command)
+  {
+    var result = _closeAccountValidator.Validate(command);
+
+    if (result.HasErrors)
+    {
+      return result;
+    }
+
+    var account = _accountRepository.GetById(command.AccountId);
+
+    if (account == null)
+    {
+      result.AddError(new ValidationError(nameof(command.AccountId), "Счет не найден."));
+      return result;
+    }
+
+    if (account.Balance != 0)
+    {
+      result.AddError(new ValidationError(nameof(account.Balance), "Для закрытия счета его баланс должен быть равен нулю."));
+      return result;
+    }
   
+    account.Close();
+    
+    return result;
+  }
+
   #endregion
 
   #region Конструкторы
@@ -113,12 +155,19 @@ public class AccountService : IAccountService
   /// <param name="accountRepository">Репозиторий счетов.</param>
   /// <param name="createAccountValidator">Валидатор создания счета.</param>
   /// <param name="accountFactory">Фабрика для создания счета.</param>
-  public AccountService(IAccountRepository accountRepository, IValidator<CreateAccountCommand> createAccountValidator, IAccountFactory accountFactory, IValidator<RenameAccountCommand> renameAccountValidator)
+  /// <param name="renameAccountValidator">Валидатор переименования счета.</param>
+  /// <param name="closeAccountValidator">Валидатор закрытия счета.</param>
+  public AccountService(IAccountRepository accountRepository, 
+                        IValidator<CreateAccountCommand> createAccountValidator, 
+                        IAccountFactory accountFactory, 
+                        IValidator<RenameAccountCommand> renameAccountValidator, 
+                        IValidator<CloseAccountCommand> closeAccountValidator)
   {
     _accountRepository = accountRepository;
     _createAccountValidator = createAccountValidator;
     _accountFactory = accountFactory;
     _renameAccountValidator = renameAccountValidator;
+    _closeAccountValidator = closeAccountValidator;
   }
 
   #endregion 
