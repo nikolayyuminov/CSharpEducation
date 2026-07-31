@@ -1,5 +1,8 @@
 namespace FinanceTracker.Application.Accounts.Commands;
 
+/// <summary>
+/// Команда для переименования счета
+/// </summary>
 public class RenameAccountCommand
 {
   #region Поля и свойства

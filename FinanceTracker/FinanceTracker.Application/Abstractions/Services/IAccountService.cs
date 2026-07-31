@@ -32,4 +32,13 @@ public interface IAccountService
   /// <param name="command">Команда от пользователя на закрытие счета.</param>
   /// <returns>Ошибки при закрытии. Если ошибок нет, счет закрыт.</returns>
   ValidationResult CloseAccount(CloseAccountCommand command);
+  
+  /// TODO
+  /// Написать тесты.
+  /// <summary>
+  /// Изменить кредитный лимит счета.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на изменение кредитного лимита счета.</param>
+  /// <returns>Ошибки при закрытии. Если ошибок нет, Кредитный лимит изменен.</returns>
+  ValidationResult ChangeCreditLimit(ChangeCreditLimitCommand command);
 }

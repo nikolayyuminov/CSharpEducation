@@ -40,7 +40,12 @@ public class AccountServiceTests
   {
     _accountRepository = new AccountRepository();
     _accountFactory = new AccountFactory();
-    _accountService = new AccountService(_accountRepository, new CreateAccountValidator(), _accountFactory, new RenameAccountValidator(), new CloseAccountValidator());
+    _accountService = new AccountService(_accountRepository, 
+                                          new CreateAccountValidator(), 
+                                          _accountFactory, 
+                                          new RenameAccountValidator(),
+                                          new CloseAccountValidator(),
+                                          new ChangeCreditLimitValidator());
   }
   
   [Test]

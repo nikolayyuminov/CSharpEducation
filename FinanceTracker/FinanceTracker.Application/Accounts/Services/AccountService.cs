@@ -3,6 +3,7 @@ using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
 using FinanceTracker.Application.Accounts.Commands;
+using FinanceTracker.Application.Accounts.Validators;
 using FinanceTracker.Application.Common.Validation;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Enums;
@@ -36,6 +37,11 @@ public class AccountService : IAccountService
   /// Валидатор закрытия счета.
   /// </summary>
   private readonly IValidator<CloseAccountCommand> _closeAccountValidator;
+  
+  /// <summary>
+  /// Валидатор изменения кредитного лимита счета.
+  /// </summary>
+  private readonly IValidator<ChangeCreditLimitCommand> _changeCreditLimitValidator;
   
   /// <summary>
   /// Фабрика для создания счета.
@@ -145,6 +151,39 @@ public class AccountService : IAccountService
     return result;
   }
 
+  /// <summary>
+  /// Изменить кредитный лимит счета.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на изменение кредитного лимита счета.</param>
+  /// <returns>Ошибки при изменении кредитного лимита. Если ошибок нет, Кредитный лимит изменен.</returns>
+  public ValidationResult ChangeCreditLimit(ChangeCreditLimitCommand command)
+  {
+    var result = _changeCreditLimitValidator.Validate(command);
+    
+    if (result.HasErrors)
+    {
+      return result;
+    }
+    
+    var account = _accountRepository.GetById(command.AccountId);
+    
+    if (account == null)
+    {
+      result.AddError(new ValidationError(nameof(command.AccountId), "Счет не найден."));
+      return result;
+    }
+    
+    if (account is not CreditAccount  creditAccount) 
+      result.AddError(new ValidationError(nameof(account.AccountType), 
+          "Кредитный лимит можно изменить только для кредитного счета."));
+    else
+    {
+      creditAccount.ChangeCreditLimit(command.NewCreditLimit);
+    }
+    
+    return result;
+  }
+
   #endregion
 
   #region Конструкторы
@@ -157,17 +196,20 @@ public class AccountService : IAccountService
   /// <param name="accountFactory">Фабрика для создания счета.</param>
   /// <param name="renameAccountValidator">Валидатор переименования счета.</param>
   /// <param name="closeAccountValidator">Валидатор закрытия счета.</param>
+  /// <param name="changeCreditLimitValidator">Валидатор изменения кредитного лимита счета.</param>
   public AccountService(IAccountRepository accountRepository, 
                         IValidator<CreateAccountCommand> createAccountValidator, 
                         IAccountFactory accountFactory, 
                         IValidator<RenameAccountCommand> renameAccountValidator, 
-                        IValidator<CloseAccountCommand> closeAccountValidator)
+                        IValidator<CloseAccountCommand> closeAccountValidator, 
+                        IValidator<ChangeCreditLimitCommand> changeCreditLimitValidator)
   {
     _accountRepository = accountRepository;
     _createAccountValidator = createAccountValidator;
     _accountFactory = accountFactory;
     _renameAccountValidator = renameAccountValidator;
     _closeAccountValidator = closeAccountValidator;
+    _changeCreditLimitValidator = changeCreditLimitValidator;
   }
 
   #endregion 

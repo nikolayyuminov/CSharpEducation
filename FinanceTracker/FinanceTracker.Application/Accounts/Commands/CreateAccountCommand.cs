@@ -3,7 +3,7 @@ using FinanceTracker.Domain.Enums;
 namespace FinanceTracker.Application.Accounts.Commands;
 
 /// <summary>
-/// Данные для создания аккаунта.
+/// Команда с данными для создания аккаунта.
 /// </summary>
 public class CreateAccountCommand
 {

@@ -36,12 +36,12 @@ public class CreditAccount : Account
   /// </summary>
   /// <param name="newLimit">Значение нового лимита.</param>
   /// <exception cref="InvalidOperationException">Кредитный лимит не может быть пустым для кредитного счета.</exception>
-  /// <exception cref="InvalidOperationException">Кредитный лимит не может быть меньше отрицательным.</exception>
+  /// <exception cref="InvalidOperationException">Кредитный лимит не может быть отрицательным.</exception>
   public void ChangeCreditLimit(decimal? newLimit)
   {
     EnsureAccountIsOpen();
     if (newLimit == null) throw new InvalidOperationException("Кредитный лимит не может быть пустым для кредитного счета.");
-    if (newLimit < 0) throw new InvalidOperationException("Кредитный лимит не может быть меньше отрицательным.");
+    if (newLimit < 0) throw new InvalidOperationException("Кредитный лимит не может быть отрицательным.");
     CreditLimit = newLimit;
   }
 
