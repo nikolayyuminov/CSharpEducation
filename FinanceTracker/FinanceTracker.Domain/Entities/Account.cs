@@ -51,7 +51,7 @@ public abstract class Account
   /// Изменить имя счета.
   /// </summary>
   /// <param name="newName">Новое имя счета.</param>
-  /// <exception cref="NullReferenceException">Имя счета не может быть пустым.</exception>
+  /// <exception cref="InvalidOperationException">Имя счета не может быть пустым.</exception>
   public void Rename(string newName)
   {
     EnsureAccountIsOpen();

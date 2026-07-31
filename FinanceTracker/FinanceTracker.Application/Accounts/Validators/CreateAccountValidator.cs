@@ -13,7 +13,7 @@ public class CreateAccountValidator : IValidator<CreateAccountCommand>
   #region Методы
   
   /// <summary>
-  /// Основной метод валидации для вызова конкретной валидации.
+  /// Основной метод валидации для вызова всей валидации.
   /// </summary>
   /// <param name="command">Команда от пользователя для создания нового счета.</param>
   /// <returns>Коллекция сообщений об ошибках.</returns>
@@ -107,7 +107,6 @@ public class CreateAccountValidator : IValidator<CreateAccountCommand>
   /// </summary>
   /// <param name="command">Команда от пользователя для создания нового счета.</param>
   /// <param name="result">Коллекция ошибок.</param>
-  /// <returns>Сообщение об ошибке.</returns>
   private void ValidateCurrency(CreateAccountCommand command, ValidationResult result)
   {
     if (!Enum.IsDefined(command.Currency)) 

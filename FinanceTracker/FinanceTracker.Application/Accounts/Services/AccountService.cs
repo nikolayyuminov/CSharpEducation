@@ -61,10 +61,7 @@ public class AccountService : IAccountService
   {
     var result = _createAccountValidator.Validate(command);
 
-    if (result.HasErrors)
-    {
-      return result;
-    }
+    if (result.HasErrors) return result;
     
     var existAccount = _accountRepository.GetByName(command.UserId, command.Name);
 
@@ -90,10 +87,7 @@ public class AccountService : IAccountService
   {
     var result = _renameAccountValidator.Validate(command);
 
-    if (result.HasErrors)
-    {
-      return result;
-    }
+    if (result.HasErrors) return result;
     
     var account = _accountRepository.GetById(command.AccountId);
     
@@ -127,11 +121,8 @@ public class AccountService : IAccountService
   {
     var result = _closeAccountValidator.Validate(command);
 
-    if (result.HasErrors)
-    {
-      return result;
-    }
-
+    if (result.HasErrors) return result;
+    
     var account = _accountRepository.GetById(command.AccountId);
 
     if (account == null)
@@ -160,10 +151,7 @@ public class AccountService : IAccountService
   {
     var result = _changeCreditLimitValidator.Validate(command);
     
-    if (result.HasErrors)
-    {
-      return result;
-    }
+    if (result.HasErrors) return result;
     
     var account = _accountRepository.GetById(command.AccountId);
     
