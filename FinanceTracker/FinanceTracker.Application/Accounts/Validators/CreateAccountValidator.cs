@@ -110,7 +110,7 @@ public class CreateAccountValidator : IValidator<CreateAccountCommand>
   private void ValidateCurrency(CreateAccountCommand command, ValidationResult result)
   {
     if (!Enum.IsDefined(command.Currency)) 
-      result.AddError(new ValidationError(nameof(command.Currency), "значение не найдено"));
+      result.AddError(new ValidationError(nameof(command.Currency), "значение не найдено."));
   }
 
   #endregion
