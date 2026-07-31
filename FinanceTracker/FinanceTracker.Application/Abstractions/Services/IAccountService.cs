@@ -14,4 +14,11 @@ public interface IAccountService
   /// <param name="command">Команда с данными для создания счета.</param>
   /// <returns>Ошибки при создании. Если ошибок нет, счет создался успешно.</returns>
   ValidationResult CreateAccount(CreateAccountCommand command);
+  
+  /// <summary>
+  /// Переименование счета.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на переименование счета.</param>
+  /// <returns>Ошибки при переименовании. Если ошибок нет, счет переименовался успешно.</returns>
+  ValidationResult RenameAccount(RenameAccountCommand command);
 }

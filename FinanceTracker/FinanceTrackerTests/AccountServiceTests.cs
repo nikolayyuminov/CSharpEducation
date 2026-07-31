@@ -40,7 +40,7 @@ public class AccountServiceTests
   {
     _accountRepository = new AccountRepository();
     _accountFactory = new AccountFactory();
-    _accountService = new AccountService(_accountRepository, new CreateAccountValidator(), _accountFactory);
+    _accountService = new AccountService(_accountRepository, new CreateAccountValidator(), _accountFactory, new RenameAccountValidator());
   }
   
   [Test]
@@ -68,7 +68,7 @@ public class AccountServiceTests
     {
       // Assert
       Assert.That(result.HasErrors, Is.True);
-      Assert.That(_accountRepository.ExistsWithName(command.UserId, command.Name), Is.False);
+      Assert.That(_accountRepository.GetByName(command.UserId, command.Name), Is.Null);
     }
   }
 

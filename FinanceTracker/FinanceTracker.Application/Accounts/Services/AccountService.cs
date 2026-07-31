@@ -26,9 +26,9 @@ public class AccountService : IAccountService
   private readonly IValidator<CreateAccountCommand> _createAccountValidator;
   
   /// <summary>
-  /// Валидатор перевода средств.
+  /// Валидатор переименования счета.
   /// </summary>
-  private readonly IValidator<TransferMoneyCommand> _transferMoneyValidator;
+  private readonly IValidator<RenameAccountCommand> _renameAccountValidator;
   
   /// <summary>
   /// Фабрика для создания счета.
@@ -52,8 +52,10 @@ public class AccountService : IAccountService
     {
       return result;
     }
+    
+    var existAccount = _accountRepository.GetByName(command.UserId, command.Name);
 
-    if (_accountRepository.ExistsWithName(command.UserId, command.Name))
+    if (existAccount != null)
     {
       var validationError = new ValidationError(nameof(command.Name), "Счет с таким именем уже существует.");
       result.AddError(validationError);
@@ -63,6 +65,41 @@ public class AccountService : IAccountService
     var account = _accountFactory.Create(command);
     
     _accountRepository.Add(account);
+    return result;
+  }
+
+  /// <summary>
+  /// Переименование счета.
+  /// </summary>
+  /// <param name="command">Команда от пользователя на переименование счета.</param>
+  /// <returns>Ошибки при переименовании. Если ошибок нет, счет переименовался успешно.</returns>
+  public ValidationResult RenameAccount(RenameAccountCommand command)
+  {
+    var result = _renameAccountValidator.Validate(command);
+
+    if (result.HasErrors)
+    {
+      return result;
+    }
+    
+    var account = _accountRepository.GetById(command.AccountId);
+    
+    if (account == null)
+    {
+      result.AddError(new ValidationError(nameof(command.AccountId), "Счет не найден."));
+      return result;
+    }
+    
+    var existingAccount  = _accountRepository.GetByName(command.UserId, command.NewName!);
+    
+    if (existingAccount != null && existingAccount.Id != account.Id)
+    {
+      result.AddError(new ValidationError(nameof(command.NewName), "Счет с таким именем уже существует."));
+      return result;
+    }
+    
+    account.Rename(command.NewName!);
+    
     return result;
   }
   
@@ -76,11 +113,12 @@ public class AccountService : IAccountService
   /// <param name="accountRepository">Репозиторий счетов.</param>
   /// <param name="createAccountValidator">Валидатор создания счета.</param>
   /// <param name="accountFactory">Фабрика для создания счета.</param>
-  public AccountService(IAccountRepository accountRepository, IValidator<CreateAccountCommand> createAccountValidator, IAccountFactory accountFactory)
+  public AccountService(IAccountRepository accountRepository, IValidator<CreateAccountCommand> createAccountValidator, IAccountFactory accountFactory, IValidator<RenameAccountCommand> renameAccountValidator)
   {
     _accountRepository = accountRepository;
     _createAccountValidator = createAccountValidator;
     _accountFactory = accountFactory;
+    _renameAccountValidator = renameAccountValidator;
   }
 
   #endregion 

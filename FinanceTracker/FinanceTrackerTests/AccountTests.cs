@@ -116,16 +116,13 @@ namespace FinanceTrackerTests
         }
 
         [Test]
-        public void Deposit_WithZeroAmount_ShouldNotChangeBalance()
+        public void Deposit_WithZeroAmount_ShouldThrowInvalidOperationException()
         {
             // Arrange
             const decimal initialBalance = 0;
 
-            // Act
-            _account.Deposit(0);
-
-            // Assert
-            Assert.That(_account.Balance, Is.EqualTo(initialBalance));
+            // Act && Assert
+            Assert.Throws(typeof(InvalidOperationException), () => _account.Deposit(initialBalance));
         }
 
         [Test]

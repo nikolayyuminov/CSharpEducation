@@ -52,7 +52,7 @@ public class TransferService : ITransferService
     var receiverAccount = _accountRepository.GetById(command.ToAccountId);
     if (receiverAccount == null)
     {
-      result.AddError(new ValidationError(nameof(command.ToAccountId), "Счет получаетля не найден."));
+      result.AddError(new ValidationError(nameof(command.ToAccountId), "Счет получателя не найден."));
 
       return result;
     }
