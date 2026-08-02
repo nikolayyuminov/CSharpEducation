@@ -19,4 +19,9 @@ public class TransferMoneyCommand
   /// Сумма перевода между счетами.
   /// </summary>
   public decimal Amount { get; init; }
+  
+  /// <summary>
+  /// Описание перевода между счетами.
+  /// </summary>
+  public string? Description { get; init; }
 }

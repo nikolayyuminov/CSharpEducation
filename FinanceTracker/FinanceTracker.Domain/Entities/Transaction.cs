@@ -23,6 +23,12 @@ public class Transaction
   /// Id категории, которой принадлежит транзакция. Может отсутствовать.
   /// </summary>
   public long? CategoryId { get; init; }
+  
+  /// <summary>
+  /// Идентификатор перевода.
+  /// Заполняется только для операций перевода.
+  /// </summary>
+  public Guid? TransferId { get; init; }
 
   /// <summary>
   /// Значение суммы транзакции. Только положительное значение.
@@ -59,10 +65,20 @@ public class Transaction
 
   #region Конструкторы
 
-  public Transaction(long accountId, long? categoryId, decimal amount, string? description, TransactionKind? kind)
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="accountId">Id счета.</param>
+  /// <param name="categoryId">Id категории.</param>
+  /// <param name="amount">Сумма транзакции.</param>
+  /// <param name="description">Описание транзакции.</param>
+  /// <param name="kind">Вид транзакции.</param>
+  /// <param name="transferId">Идентификатор перевода между счетами.</param>
+  public Transaction(long accountId, long? categoryId, decimal amount, string? description, TransactionKind? kind, Guid? transferId = null)
   {
     AccountId = accountId;
     Kind = kind;
+    TransferId = transferId;
     Amount = amount;
     CreatedAt = DateTime.Now;
     CategoryId = categoryId;

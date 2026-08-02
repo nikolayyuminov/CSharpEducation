@@ -152,6 +152,14 @@ public class CategoryService : ICategoryService
 
   #region Конструкторы
 
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="categoryRepository">Репозиторий категорий.</param>
+  /// <param name="createCategoryValidator">Валидатор создания категории.</param>
+  /// <param name="renameCategoryValidator">Валидатор переименования категории.</param>
+  /// <param name="archiveCategoryValidator">Валидатор архивирования категории.</param>
+  /// <param name="changeDescriptionCategoryValidator">Валидатор изменения описания категории.</param>
   public CategoryService(ICategoryRepository categoryRepository, 
                           IValidator<CreateCategoryCommand> createCategoryValidator, 
                           IValidator<RenameCategoryCommand> renameCategoryValidator, 

@@ -67,7 +67,7 @@ public class TransferMoneyValidator : IValidator<TransferMoneyCommand>
   /// <param name="result">Коллекция ошибок.</param>
   private void ValidateAccountsAreDifferent(TransferMoneyCommand command, ValidationResult result)
   {
-    if  (command.FromAccountId ==command.ToAccountId)
+    if  (command.FromAccountId == command.ToAccountId)
       result.AddError(new ValidationError(nameof(command.FromAccountId), "Счета отправителя и получателя должны отличаться."));
   }
 }

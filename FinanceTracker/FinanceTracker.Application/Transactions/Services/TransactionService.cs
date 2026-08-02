@@ -117,6 +117,14 @@ public class TransactionService : ITransactionService
 
   #region Конструкторы
 
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="transactionRepository">Репозиторий транзакций.</param>
+  /// <param name="createTransactionValidator">Валидатор создания транзакции.</param>
+  /// <param name="changeDescriptionTransactionValidator">Валидатор изменения описания транзакции.</param>
+  /// <param name="accountRepository">Репозиторий счетов.</param>
+  /// <param name="categoryRepository">Репозиторий категорий.</param>
   public TransactionService(ITransactionRepository transactionRepository,
                             IValidator<CreateTransactionCommand> createTransactionValidator,
                             IValidator<ChangeTransactionDescriptionCommand> changeDescriptionTransactionValidator, 
