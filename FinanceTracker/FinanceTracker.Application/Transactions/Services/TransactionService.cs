@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
@@ -39,6 +40,11 @@ public class TransactionService : ITransactionService
   /// Валидатор изменения описания транзакции.
   /// </summary>
   private readonly IValidator<ChangeTransactionDescriptionCommand> _changeDescriptionTransactionValidator;
+  
+  /// <summary>
+  /// Юнит для работы с БД.
+  /// </summary>
+  private readonly IUnitOfWork _unitOfWork;
 
   #endregion
 
@@ -86,7 +92,7 @@ public class TransactionService : ITransactionService
     var transaction = new Transaction(command.AccountId, command.CategoryId, command.Amount, command.Description, kind);
     
     _transactionRepository.Add(transaction);
-
+    _unitOfWork.SaveChanges();
     return validationResult;
   }
 
@@ -109,7 +115,7 @@ public class TransactionService : ITransactionService
     }
 
     transaction.ChangeDescription(command.NewDescription);
-
+    _unitOfWork.SaveChanges();
     return validationResult;
   }
 
@@ -125,17 +131,20 @@ public class TransactionService : ITransactionService
   /// <param name="changeDescriptionTransactionValidator">Валидатор изменения описания транзакции.</param>
   /// <param name="accountRepository">Репозиторий счетов.</param>
   /// <param name="categoryRepository">Репозиторий категорий.</param>
+  /// <param name="unitOfWork">Юнит для работы с БД.</param>
   public TransactionService(ITransactionRepository transactionRepository,
                             IValidator<CreateTransactionCommand> createTransactionValidator,
                             IValidator<ChangeTransactionDescriptionCommand> changeDescriptionTransactionValidator, 
                             IAccountRepository accountRepository, 
-                            ICategoryRepository categoryRepository)
+                            ICategoryRepository categoryRepository, 
+                            IUnitOfWork unitOfWork)
   {
     _transactionRepository = transactionRepository;
     _createTransactionValidator = createTransactionValidator;
     _changeDescriptionTransactionValidator = changeDescriptionTransactionValidator;
     _accountRepository = accountRepository;
     _categoryRepository = categoryRepository;
+    _unitOfWork = unitOfWork;
   }
 
   #endregion

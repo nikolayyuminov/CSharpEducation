@@ -42,6 +42,11 @@ public abstract class Account
     /// Состояние счета (Открытый/Закрытый).
     /// </summary>
     public bool IsClosed { get; private set; }
+    
+    /// <summary>
+    /// Навигационное свойство список транзакций.
+    /// </summary>
+    public IReadOnlyCollection<Transaction> Transactions => [];
 
   #endregion
 

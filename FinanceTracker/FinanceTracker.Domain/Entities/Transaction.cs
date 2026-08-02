@@ -38,7 +38,7 @@ public class Transaction
   /// <summary>
   /// Вид транзакции. (Входящая/Исходящая).
   /// </summary>
-  public TransactionKind? Kind { get; init; }
+  public TransactionKind Kind { get; init; }
   
   /// <summary>
   /// Время проведения транзакции.
@@ -49,11 +49,25 @@ public class Transaction
   /// Описание транзакции. Может отсутствовать.
   /// </summary>
   public string? Description { get; private set; }
+  
+  /// <summary>
+  /// Навигационное свойство счет.
+  /// </summary>
+  public Account Account { get; private set; } = null!;
+
+  /// <summary>
+  /// Навигационное свойство категория.
+  /// </summary>
+  public Category? Category { get; private set; }
 
   #endregion
 
   #region Методы
 
+  /// <summary>
+  /// Изменение описания транзакции. 
+  /// </summary>
+  /// <param name="newDescription">Новое значение описания.</param>
   public void ChangeDescription(string? newDescription)
   {
     if (string.Equals(Description, newDescription)) return;
@@ -74,13 +88,13 @@ public class Transaction
   /// <param name="description">Описание транзакции.</param>
   /// <param name="kind">Вид транзакции.</param>
   /// <param name="transferId">Идентификатор перевода между счетами.</param>
-  public Transaction(long accountId, long? categoryId, decimal amount, string? description, TransactionKind? kind, Guid? transferId = null)
+  public Transaction(long accountId, long? categoryId, decimal amount, string? description, TransactionKind kind, Guid? transferId = null)
   {
     AccountId = accountId;
     Kind = kind;
     TransferId = transferId;
     Amount = amount;
-    CreatedAt = DateTime.Now;
+    CreatedAt = DateTime.UtcNow;
     CategoryId = categoryId;
     Description = description;
   }

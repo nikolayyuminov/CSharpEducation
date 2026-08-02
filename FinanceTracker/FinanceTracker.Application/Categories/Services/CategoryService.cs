@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
@@ -38,6 +39,11 @@ public class CategoryService : ICategoryService
   /// Валидатор изменения описания категории.
   /// </summary>
   private readonly IValidator<ChangeDescriptionCommand> _changeDescriptionCategoryValidator;
+  
+  /// <summary>
+  /// Юнит для работы с БД.
+  /// </summary>
+  private readonly IUnitOfWork _unitOfWork;
 
   #endregion
 
@@ -65,7 +71,7 @@ public class CategoryService : ICategoryService
     var category = new Category(command.Name, command.Description, command.UserId, command.CategoryKind);
     
     _categoryRepository.Add(category);
-    
+    _unitOfWork.SaveChanges();
     return validationResult;
   }
 
@@ -97,7 +103,7 @@ public class CategoryService : ICategoryService
     }
     
     category.Rename(command.NewName!);
-    
+    _unitOfWork.SaveChanges();
     return validationResult;
   }
 
@@ -120,7 +126,7 @@ public class CategoryService : ICategoryService
     }
     
     category.Archive();
-    
+    _unitOfWork.SaveChanges();
     return validationResult;
   }
 
@@ -144,7 +150,7 @@ public class CategoryService : ICategoryService
     }
     
     category.ChangeDescription(command.NewDescription);
-    
+    _unitOfWork.SaveChanges();
     return validationResult;
   }
 
@@ -160,17 +166,20 @@ public class CategoryService : ICategoryService
   /// <param name="renameCategoryValidator">Валидатор переименования категории.</param>
   /// <param name="archiveCategoryValidator">Валидатор архивирования категории.</param>
   /// <param name="changeDescriptionCategoryValidator">Валидатор изменения описания категории.</param>
+  /// <param name="unitOfWork">Юнит для работы с БД.</param>
   public CategoryService(ICategoryRepository categoryRepository, 
                           IValidator<CreateCategoryCommand> createCategoryValidator, 
                           IValidator<RenameCategoryCommand> renameCategoryValidator, 
                           IValidator<ArchiveCategoryCommand> archiveCategoryValidator, 
-                          IValidator<ChangeDescriptionCommand> changeDescriptionCategoryValidator)
+                          IValidator<ChangeDescriptionCommand> changeDescriptionCategoryValidator, 
+                          IUnitOfWork unitOfWork)
   {
     _categoryRepository = categoryRepository;
     _createCategoryValidator = createCategoryValidator;
     _renameCategoryValidator = renameCategoryValidator;
     _archiveCategoryValidator = archiveCategoryValidator;
     _changeDescriptionCategoryValidator = changeDescriptionCategoryValidator;
+    _unitOfWork = unitOfWork;
   }
 
   #endregion

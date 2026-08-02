@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Infrastructure.Persistence;
 
 namespace FinanceTracker.Infrastructure.Repositories;
 
@@ -11,9 +12,9 @@ public class TransactionRepository : ITransactionRepository
   #region Поля и свойства
 
   /// <summary>
-  /// Коллекция транзакций.
+  /// Контекст БД.
   /// </summary>
-  private  readonly List<Transaction> _transactions;
+  private readonly FinanceTrackerDbContext _dbContext;
 
   #endregion
   
@@ -25,7 +26,7 @@ public class TransactionRepository : ITransactionRepository
   /// <param name="transaction">Транзакция.</param>
   public void Add(Transaction transaction)
   {
-    _transactions.Add(transaction);
+    _dbContext.Transactions.Add(transaction);
   }
 
   /// <summary>
@@ -35,16 +36,16 @@ public class TransactionRepository : ITransactionRepository
   /// <returns>Транзакция. Может быть пустой.</returns>
   public Transaction? GetById(long transactionId)
   {
-    return _transactions.FirstOrDefault(t => t.Id == transactionId);
+    return _dbContext.Transactions.Find(transactionId);
   }
 
   #endregion
 
   #region Конструкторы
 
-  public TransactionRepository()
+  public TransactionRepository(FinanceTrackerDbContext dbContext)
   {
-    _transactions = [];
+    _dbContext = dbContext;
   }
 
   #endregion

@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Infrastructure.Persistence;
 
 namespace FinanceTracker.Infrastructure.Repositories;
 
@@ -11,9 +12,9 @@ public class AccountRepository : IAccountRepository
   #region Поля и свойства
 
   /// <summary>
-  /// Коллекция счетов.
+  /// Контекст БД.
   /// </summary>
-  private readonly List<Account> _accounts;
+  private readonly FinanceTrackerDbContext _dbContext;
 
   #endregion
 
@@ -25,7 +26,7 @@ public class AccountRepository : IAccountRepository
   /// <param name="account">Счет.</param>
   public void Add(Account account)
   {
-    _accounts.Add(account);
+    _dbContext.Accounts.Add(account);
   }
 
   /// <summary>
@@ -35,7 +36,7 @@ public class AccountRepository : IAccountRepository
   /// <returns>Найденный счет или null, если счет не существует.</returns>
   public Account? GetById(long accountId)
   {
-    return _accounts.FirstOrDefault(x => x.Id == accountId);
+    return _dbContext.Accounts.Find(accountId);
   }
 
   /// <summary>
@@ -46,16 +47,21 @@ public class AccountRepository : IAccountRepository
   /// <returns>Найденный счет или null, если счет не существует.</returns>
   public Account? GetByName(long userId, string name)
   {
-    return _accounts.FirstOrDefault(x => x.UserId == userId && x.Name == name);
+    return _dbContext.Accounts
+                     .FirstOrDefault(x => x.UserId == userId && x.Name == name);
   }
 
   #endregion
 
   #region Конструктор
 
-  public AccountRepository()
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="dbContext">Контекст БД.</param>
+  public AccountRepository(FinanceTrackerDbContext dbContext)
   {
-    _accounts = [];
+    _dbContext = dbContext;
   }
 
   #endregion

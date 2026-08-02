@@ -1,3 +1,6 @@
+using FinanceTracker.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 namespace FinanceTracker.API;
 
 public class Program
@@ -11,6 +14,9 @@ public class Program
     builder.Services.AddControllers();
     // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
     builder.Services.AddOpenApi();
+    
+    builder.Services.AddDbContext<FinanceTrackerDbContext>(options => options.UseNpgsql(
+        builder.Configuration.GetConnectionString("FinanceTracker")));
 
     var app = builder.Build();
 

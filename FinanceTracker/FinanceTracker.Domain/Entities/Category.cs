@@ -39,6 +39,11 @@ public class Category
   /// Описание категории.
   /// </summary>
   public string? Description { get; private set; }
+  
+  /// <summary>
+  /// Навигационное свойство список транзакций.
+  /// </summary>
+  public IReadOnlyCollection<Transaction> Transactions => [];
 
   #endregion
 

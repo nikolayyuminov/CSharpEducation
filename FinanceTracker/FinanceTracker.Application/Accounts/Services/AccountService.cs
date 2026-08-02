@@ -1,12 +1,12 @@
+using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Abstractions.Factories;
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
 using FinanceTracker.Application.Accounts.Commands;
-using FinanceTracker.Application.Accounts.Validators;
 using FinanceTracker.Application.Common.Validation;
 using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Enums;
+
 
 
 namespace FinanceTracker.Application.Accounts.Services;
@@ -47,6 +47,11 @@ public class AccountService : IAccountService
   /// Фабрика для создания счета.
   /// </summary>
   private readonly IAccountFactory _accountFactory;
+  
+  /// <summary>
+  /// Юнит для работы с БД.
+  /// </summary>
+  private readonly IUnitOfWork _unitOfWork;
 
   #endregion
   
@@ -63,18 +68,18 @@ public class AccountService : IAccountService
 
     if (result.HasErrors) return result;
     
-    var existAccount = _accountRepository.GetByName(command.UserId, command.Name);
+    var existingAccount = _accountRepository.GetByName(command.UserId, command.Name);
 
-    if (existAccount != null)
+    if (existingAccount != null)
     {
-      var validationError = new ValidationError(nameof(command.Name), "Счет с таким именем уже существует.");
-      result.AddError(validationError);
+      result.AddError(new ValidationError(nameof(command.Name), "Счет с таким именем уже существует."));
       return result;
     }
 
     var account = _accountFactory.Create(command);
     
     _accountRepository.Add(account);
+    _unitOfWork.SaveChanges();
     return result;
   }
 
@@ -106,7 +111,7 @@ public class AccountService : IAccountService
     }
     
     account.Rename(command.NewName!);
-    
+    _unitOfWork.SaveChanges();
     return result;
   }
 
@@ -138,7 +143,7 @@ public class AccountService : IAccountService
     }
   
     account.Close();
-    
+    _unitOfWork.SaveChanges();
     return result;
   }
 
@@ -167,6 +172,7 @@ public class AccountService : IAccountService
     else
     {
       creditAccount.ChangeCreditLimit(command.NewCreditLimit);
+      _unitOfWork.SaveChanges();
     }
     
     return result;
@@ -185,12 +191,14 @@ public class AccountService : IAccountService
   /// <param name="renameAccountValidator">Валидатор переименования счета.</param>
   /// <param name="closeAccountValidator">Валидатор закрытия счета.</param>
   /// <param name="changeCreditLimitValidator">Валидатор изменения кредитного лимита счета.</param>
+  /// <param name="unitOfWork">Юнит для работы с БД.</param>
   public AccountService(IAccountRepository accountRepository, 
                         IValidator<CreateAccountCommand> createAccountValidator, 
                         IAccountFactory accountFactory, 
                         IValidator<RenameAccountCommand> renameAccountValidator, 
                         IValidator<CloseAccountCommand> closeAccountValidator, 
-                        IValidator<ChangeCreditLimitCommand> changeCreditLimitValidator)
+                        IValidator<ChangeCreditLimitCommand> changeCreditLimitValidator, 
+                        IUnitOfWork unitOfWork)
   {
     _accountRepository = accountRepository;
     _createAccountValidator = createAccountValidator;
@@ -198,6 +206,7 @@ public class AccountService : IAccountService
     _renameAccountValidator = renameAccountValidator;
     _closeAccountValidator = closeAccountValidator;
     _changeCreditLimitValidator = changeCreditLimitValidator;
+    _unitOfWork = unitOfWork;
   }
 
   #endregion 

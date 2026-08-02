@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
@@ -29,6 +30,11 @@ public class TransferService : ITransferService
   /// Репозиторий транзакций.
   /// </summary>
   private readonly ITransactionRepository _transactionRepository;
+  
+  /// <summary>
+  /// Юнит для работы с БД.
+  /// </summary>
+  private readonly IUnitOfWork _unitOfWork;
 
   #endregion
 
@@ -71,7 +77,7 @@ public class TransferService : ITransferService
     
     _transactionRepository.Add(expenseTransaction);
     _transactionRepository.Add(incomeTransaction);
-    
+    _unitOfWork.SaveChanges();
     return result;
   }
 
@@ -83,15 +89,18 @@ public class TransferService : ITransferService
   /// Конструктор.
   /// </summary>
   /// <param name="accountRepository">Репозиторий счетов.</param>
-  /// <param name="transferMoneyValidator">Валидатор перевода средств между счетмаи.</param>
+  /// <param name="transferMoneyValidator">Валидатор перевода средств между счетами.</param>
   /// <param name="transactionRepository">Репозиторий транзакций.</param>
+  /// <param name="unitOfWork">Юнит для работы с БД.</param>
   public TransferService(IAccountRepository accountRepository, 
                         IValidator<TransferMoneyCommand> transferMoneyValidator, 
-                        ITransactionRepository transactionRepository)
+                        ITransactionRepository transactionRepository, 
+                        IUnitOfWork unitOfWork)
   {
     _accountRepository = accountRepository;
     _transferMoneyValidator = transferMoneyValidator;
     _transactionRepository = transactionRepository;
+    _unitOfWork = unitOfWork;
   }
   #endregion
 }

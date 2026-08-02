@@ -23,7 +23,7 @@ public class CreateTransactionCommand
   /// Вид операции.
   /// Используется только если категория не указана.
   /// </summary>
-  public TransactionKind? Kind { get; init; }
+  public TransactionKind Kind { get; init; }
 
   /// <summary>
   /// Значение суммы транзакции. Только положительное значение.

@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Infrastructure.Persistence;
 
 namespace FinanceTracker.Infrastructure.Repositories;
 
@@ -11,9 +12,9 @@ public class CategoryRepository : ICategoryRepository
   #region Поля и свойства
 
   /// <summary>
-  /// Коллекция Категорий.
+  /// Контекст БД.
   /// </summary>
-  private readonly List<Category> _categories;
+  private readonly FinanceTrackerDbContext _dbContext;
 
   #endregion
 
@@ -25,7 +26,7 @@ public class CategoryRepository : ICategoryRepository
   /// <param name="category">Категория.</param>
   public void Add(Category category)
   {
-    _categories.Add(category);
+    _dbContext.Categories.Add(category);
   }
 
   /// <summary>
@@ -35,7 +36,7 @@ public class CategoryRepository : ICategoryRepository
   /// <returns>Категория, может быть пустой.</returns>
   public Category? GetById(long categoryId)
   {
-    return _categories.FirstOrDefault(c => c.Id == categoryId);
+    return _dbContext.Categories.Find(categoryId);
   }
 
   /// <summary>
@@ -46,16 +47,17 @@ public class CategoryRepository : ICategoryRepository
   /// <returns>Категория, может быть пустой.</returns>
   public Category? GetByName(long? userId, string name)
   {
-    return _categories.FirstOrDefault(c => (c.UserId == userId || c.UserId == null) && c.Name == name);
+    return _dbContext.Categories
+                     .FirstOrDefault(c => (c.UserId == userId || c.UserId == null) && c.Name == name);
   }
 
   #endregion
 
   #region Конструкторы
 
-  public CategoryRepository()
+  public CategoryRepository(FinanceTrackerDbContext dbContext)
   {
-    _categories = [];
+    _dbContext = dbContext;
   }
 
   #endregion
