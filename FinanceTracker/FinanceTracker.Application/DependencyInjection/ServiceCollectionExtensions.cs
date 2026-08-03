@@ -11,6 +11,9 @@ using FinanceTracker.Application.Factories;
 using FinanceTracker.Application.Transactions.Commands;
 using FinanceTracker.Application.Transactions.Services;
 using FinanceTracker.Application.Transactions.Validators;
+using FinanceTracker.Application.Transfers.Commands;
+using FinanceTracker.Application.Transfers.Services;
+using FinanceTracker.Application.Transfers.Validators;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FinanceTracker.Application.DependencyInjection;

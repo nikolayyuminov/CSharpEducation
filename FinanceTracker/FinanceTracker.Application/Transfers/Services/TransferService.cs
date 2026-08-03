@@ -2,12 +2,12 @@ using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Abstractions.Repositories;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
-using FinanceTracker.Application.Accounts.Commands;
 using FinanceTracker.Application.Common.Validation;
+using FinanceTracker.Application.Transfers.Commands;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Enums;
 
-namespace FinanceTracker.Application.Accounts.Services;
+namespace FinanceTracker.Application.Transfers.Services;
 
 /// <summary>
 /// Сервис для работы с переводами.

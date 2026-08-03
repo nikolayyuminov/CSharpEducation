@@ -1,12 +1,10 @@
-namespace FinanceTracker.Application.Accounts.Commands;
+namespace FinanceTracker.API.Contracts.Accounts;
 
 /// <summary>
-/// Команда для переименования счета.
+/// Запрос пользователя для переименования счета.
 /// </summary>
-public class RenameAccountCommand
+public class RenameAccountRequest
 {
-  #region Поля и свойства
-
   /// <summary>
   /// Id пользователя, которому принадлежит счет.
   /// </summary>
@@ -21,6 +19,4 @@ public class RenameAccountCommand
   /// Новое имя для счета.
   /// </summary>
   public string? NewName { get; init; }
-
-  #endregion
 }

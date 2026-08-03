@@ -1,8 +1,8 @@
 using FinanceTracker.Application.Abstractions.Validation;
-using FinanceTracker.Application.Accounts.Commands;
 using FinanceTracker.Application.Common.Validation;
+using FinanceTracker.Application.Transfers.Commands;
 
-namespace FinanceTracker.Application.Accounts.Validators;
+namespace FinanceTracker.Application.Transfers.Validators;
 
 /// <summary>
 /// Валидция перевода средств между счетами. 

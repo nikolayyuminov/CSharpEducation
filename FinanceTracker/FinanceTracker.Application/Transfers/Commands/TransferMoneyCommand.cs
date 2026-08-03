@@ -1,4 +1,4 @@
-namespace FinanceTracker.Application.Accounts.Commands;
+namespace FinanceTracker.Application.Transfers.Commands;
 
 /// <summary>
 /// Команда перевода средств между счетами.

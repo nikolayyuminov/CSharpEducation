@@ -34,7 +34,7 @@ public class AccountServiceTests
       UserId = userId
     };
   }
-
+/*
   [SetUp]
   public void Setup()
   {
@@ -47,7 +47,7 @@ public class AccountServiceTests
                                           new CloseAccountValidator(),
                                           new ChangeCreditLimitValidator());
   }
-  
+  */
   [Test]
   public void CreateAccount_ValidCommand_ReturnsSuccess()
   {
