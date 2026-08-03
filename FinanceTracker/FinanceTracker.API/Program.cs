@@ -1,8 +1,11 @@
-using FinanceTracker.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using FinanceTracker.Application.DependencyInjection;
+using FinanceTracker.Infrastructure.DependencyInjection;
 
 namespace FinanceTracker.API;
 
+/// <summary>
+/// Точка входа в приложение.
+/// </summary>
 public class Program
 {
   public static void Main(string[] args)
@@ -12,11 +15,10 @@ public class Program
     // Add services to the container.
 
     builder.Services.AddControllers();
-    // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
     builder.Services.AddOpenApi();
     
-    builder.Services.AddDbContext<FinanceTrackerDbContext>(options => options.UseNpgsql(
-        builder.Configuration.GetConnectionString("FinanceTracker")));
+    builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddApplication();
 
     var app = builder.Build();
 
@@ -25,14 +27,9 @@ public class Program
     {
       app.MapOpenApi();
     }
-
     app.UseHttpsRedirection();
-
     app.UseAuthorization();
-
-
     app.MapControllers();
-
     app.Run();
   }
 }
