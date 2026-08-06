@@ -3,7 +3,7 @@ namespace FinanceTracker.API.Contracts.Categories;
 /// <summary>
 /// Запрос от пользователя изменения описания категории.
 /// </summary>
-public class ChangeDescriptionRequest
+public sealed record ChangeDescriptionRequest
 {
   /// <summary>
   /// Id категории для изменения описания.

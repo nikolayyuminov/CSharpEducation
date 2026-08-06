@@ -5,7 +5,7 @@ namespace FinanceTracker.API.Contracts.Transactions;
 /// <summary>
 /// Запрос от пользователя с данными для создания транзакции.
 /// </summary>
-public class CreateTransactionRequest
+public sealed record CreateTransactionRequest
 {
   /// <summary>
   /// Id счета, которому принадлежит транзакция.

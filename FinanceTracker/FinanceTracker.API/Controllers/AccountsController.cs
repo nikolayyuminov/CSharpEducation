@@ -29,7 +29,7 @@ public class AccountsController : ControllerBase
   /// <param name="request">Запрос пользователя для создания счета.</param>
   /// <returns>Результат запроса.</returns>
   [HttpPost]
-  public IActionResult Create(CreateAccountRequest request)
+  public ActionResult Create([FromBody] CreateAccountRequest request)
   {
     var command = AccountMapper.ToCreateAccountCommand(request);
 
@@ -46,8 +46,8 @@ public class AccountsController : ControllerBase
   /// </summary>
   /// <param name="request">Запрос пользователя для создания счета.</param>
   /// <returns>Результат запроса.</returns>
-  [HttpPost]
-  public IActionResult Rename(RenameAccountRequest request)
+  [HttpPost("rename")]
+  public ActionResult Rename([FromBody] RenameAccountRequest request)
   {
     var command = AccountMapper.ToRenameAccountCommand(request);
 
@@ -64,8 +64,8 @@ public class AccountsController : ControllerBase
   /// </summary>
   /// <param name="request">Запрос пользователя для закрытия счета.</param>
   /// <returns>Результат запроса.</returns>
-  [HttpPost]
-  public IActionResult Close(CloseAccountRequest request)
+  [HttpPost("close")]
+  public ActionResult Close([FromBody] CloseAccountRequest request)
   {
     var command = AccountMapper.ToCloseAccountCommand(request);
 
@@ -82,8 +82,8 @@ public class AccountsController : ControllerBase
   /// </summary>
   /// <param name="request">Запрос пользователя для изменения кредитного лимита.</param>
   /// <returns>Результат запроса.</returns>
-  [HttpPost]
-  public IActionResult ChangeCreditLimit(ChangeCreditLimitRequest request)
+  [HttpPost("change-credit-limit")]
+  public ActionResult ChangeCreditLimit([FromBody] ChangeCreditLimitRequest request)
   {
     var command = AccountMapper.ToChangeCreditLimitCommand(request);
 

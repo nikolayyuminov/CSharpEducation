@@ -3,7 +3,7 @@ namespace FinanceTracker.API.Contracts.Categories;
 /// <summary>
 /// Запрос от пользователя на переименование категории.
 /// </summary>
-public class RenameCategoryRequest
+public sealed record RenameCategoryRequest
 {
   /// <summary>
   /// Id пользователя, которому принадлежит категория.

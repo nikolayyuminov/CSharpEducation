@@ -3,7 +3,7 @@ namespace FinanceTracker.API.Contracts.Accounts;
 /// <summary>
 /// Запрос пользователя для переименования счета.
 /// </summary>
-public class RenameAccountRequest
+public sealed record RenameAccountRequest
 {
   /// <summary>
   /// Id пользователя, которому принадлежит счет.

@@ -183,3 +183,37 @@ use case по слоям архитектуры
 	ostgreSQL
         ↓
 	Ответ клиенту
+	
+AccountService обязанности:
+
+Получить команду
+
+↓
+
+Провести валидацию
+
+↓
+
+Проверить бизнес-правила, требующие обращения к репозиторию
+
+↓
+
+Создать доменную сущность
+
+↓
+
+Сохранить сущность
+
+↓
+
+Вернуть результат
+
+тут нет
+SQL;
+Entity Framework;
+HTTP;
+работы с контроллером.
+
+Это все не его ответственность.
+
+dotnet ef migrations add InitialCreate --project FinanceTracker.Infrastructure --startup-project FinanceTracker.API --output-dir Persistence/Migrations

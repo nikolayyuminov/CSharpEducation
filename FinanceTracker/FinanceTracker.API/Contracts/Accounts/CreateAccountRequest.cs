@@ -5,7 +5,7 @@ namespace FinanceTracker.API.Contracts.Accounts;
 /// <summary>
 /// Запрос пользователя для создания счета. 
 /// </summary>
-public class CreateAccountRequest
+public sealed record CreateAccountRequest
 {
   /// <summary>
   /// Id пользователя, которому будет принадлежать счет.

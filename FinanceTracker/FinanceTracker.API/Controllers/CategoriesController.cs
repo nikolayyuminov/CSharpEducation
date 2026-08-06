@@ -29,7 +29,7 @@ public class CategoriesController : ControllerBase
   /// <param name="request">Запрос пользователя для создания категории.</param>
   /// <returns>Результат запроса.</returns>
   [HttpPost]
-  public IActionResult Create(CreateCategoryRequest request)
+  public ActionResult Create([FromBody] CreateCategoryRequest request)
   {
     var command = CategoryMapper.ToCreateCategoryCommand(request);
 
@@ -46,8 +46,8 @@ public class CategoriesController : ControllerBase
   /// </summary>
   /// <param name="request">Запрос пользователя для переименования категории.</param>
   /// <returns>Результат запроса.</returns>
-  [HttpPost]
-  public IActionResult Rename(RenameCategoryRequest request)
+  [HttpPost("rename")]
+  public ActionResult Rename([FromBody] RenameCategoryRequest request)
   {
     var command = CategoryMapper.ToRenameCategoryCommand(request);
 
@@ -64,8 +64,8 @@ public class CategoriesController : ControllerBase
   /// </summary>
   /// <param name="request">Запрос пользователя для изменения описания категории.</param>
   /// <returns>Результат запроса.</returns>
-  [HttpPost]
-  public IActionResult ChangeDescription(ChangeDescriptionRequest request)
+  [HttpPost("change-category")]
+  public ActionResult ChangeDescription([FromBody] ChangeDescriptionRequest request)
   {
     var command = CategoryMapper.ToChangeDescriptionCommand(request);
 
@@ -82,8 +82,8 @@ public class CategoriesController : ControllerBase
   /// </summary>
   /// <param name="request">Запрос пользователя для архивирования категории.</param>
   /// <returns>Результат запроса.</returns>
-  [HttpPost]
-  public IActionResult Archive(ArchiveCategoryRequest request)
+  [HttpPost("archive")]
+  public ActionResult Archive([FromBody] ArchiveCategoryRequest request)
   {
     var command = CategoryMapper.ToArchiveCategoryCommand(request);
 

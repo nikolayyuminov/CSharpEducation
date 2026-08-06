@@ -3,7 +3,7 @@ namespace FinanceTracker.API.Contracts.Transactions;
 /// <summary>
 /// Запрос от пользователя на изменение описания транзакции.
 /// </summary>
-public class ChangeTransactionDescriptionRequest
+public sealed record ChangeTransactionDescriptionRequest
 {
   /// <summary>
   /// Id транзакции для изменения описания.

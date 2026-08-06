@@ -3,7 +3,7 @@ namespace FinanceTracker.API.Contracts.Transfers;
 /// <summary>
 /// Запрос от пользователя на перевод средств между счетами.
 /// </summary>
-public class TransferMoneyRequest
+public sealed record TransferMoneyRequest
 {
   /// <summary>
   /// Откуда списать средства.

@@ -6,7 +6,7 @@ namespace FinanceTracker.API.Mappers;
 /// <summary>
 /// Маппер для преобразования моделей транзакций между API и слоем Application.
 /// </summary>
-public class TransactionMapper
+public static class TransactionMapper
 {
   /// <summary>
   /// Преобразовать HTTP-запрос на создание транзакции

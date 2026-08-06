@@ -3,7 +3,7 @@ namespace FinanceTracker.API.Contracts.Accounts;
 /// <summary>
 /// Запрос пользователя на закрытие счета.
 /// </summary>
-public class CloseAccountRequest
+public sealed record CloseAccountRequest
 {
   /// <summary>
   /// Id счета, который станет закрытым.

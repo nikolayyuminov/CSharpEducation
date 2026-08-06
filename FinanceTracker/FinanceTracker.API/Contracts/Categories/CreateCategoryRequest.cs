@@ -5,7 +5,7 @@ namespace FinanceTracker.API.Contracts.Categories;
 /// <summary>
 /// Запрос от пользователя с данными для создания категории.
 /// </summary>
-public class CreateCategoryRequest
+public sealed record CreateCategoryRequest
 {
   /// <summary>
   /// Имя категории.

@@ -3,7 +3,7 @@ namespace FinanceTracker.API.Contracts.Accounts;
 /// <summary>
 /// Запрос пользователя для изменения кредитного лимита.
 /// </summary>
-public class ChangeCreditLimitRequest
+public sealed record ChangeCreditLimitRequest
 {
   /// <summary>
   /// Id счета, которому нужно изменить кредитный лимит.

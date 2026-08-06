@@ -29,7 +29,7 @@ public class TransfersController : ControllerBase
   /// <param name="request">Запрос от пользователя на перевод средств между счетами.</param>
   /// <returns>Результат запроса.</returns>
   [HttpPost]
-  public IActionResult Transfer(TransferMoneyRequest request)
+  public ActionResult Transfer([FromBody] TransferMoneyRequest request)
   {
     var command = TransferMapper.ToTransferMoneyCommand(request);
 

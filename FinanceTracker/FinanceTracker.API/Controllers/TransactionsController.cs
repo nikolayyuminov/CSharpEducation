@@ -29,7 +29,7 @@ public class TransactionsController : ControllerBase
   /// <param name="request">Запрос пользователя для создания транзакции.</param>
   /// <returns>Результат запроса.</returns>
   [HttpPost]
-  public IActionResult Create(CreateTransactionRequest request)
+  public ActionResult Create([FromBody] CreateTransactionRequest request)
   {
     var command = TransactionMapper.ToCreateTransactionCommand(request);
 
@@ -46,8 +46,8 @@ public class TransactionsController : ControllerBase
   /// </summary>
   /// <param name="request">Запрос пользователя на изменение описания транзакции.</param>
   /// <returns>Результат запроса.</returns>
-  [HttpPost]
-  public IActionResult ChangeDescription(ChangeTransactionDescriptionRequest request)
+  [HttpPost("change-description")]
+  public ActionResult ChangeDescription([FromBody] ChangeTransactionDescriptionRequest request)
   {
     var command = TransactionMapper.ToChangeTransactionDescriptionCommand(request);
 
