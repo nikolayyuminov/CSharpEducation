@@ -5,6 +5,6 @@ namespace FinanceTracker.Domain.Enums;
 /// </summary>
 public enum CategoryKind
 {
-  Expense = 0,
-  Income = 1 
+  Income = 0,
+  Expense = 1,
 }

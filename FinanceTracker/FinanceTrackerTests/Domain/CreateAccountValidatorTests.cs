@@ -2,7 +2,7 @@
 using FinanceTracker.Application.Accounts.Validators;
 using FinanceTracker.Domain.Enums;
 
-namespace FinanceTrackerTests;
+namespace FinanceTrackerTests.Domain;
 
 public class CreateAccountValidatorTests
 {

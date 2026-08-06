@@ -1,7 +1,7 @@
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Enums;
 
-namespace FinanceTrackerTests;
+namespace FinanceTrackerTests.Domain;
 
 [TestFixture]
     public class DepositAccountTests
