@@ -2,6 +2,7 @@ using FinanceTracker.Application.Abstractions.Factories;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
 using FinanceTracker.Application.Accounts.Commands;
+using FinanceTracker.Application.Accounts.Queries.GetAccounts;
 using FinanceTracker.Application.Accounts.Services;
 using FinanceTracker.Application.Accounts.Validators;
 using FinanceTracker.Application.Categories.Commands;
@@ -66,6 +67,9 @@ public static class ServiceCollectionExtensions
     services.AddScoped<IValidator<ChangeTransactionDescriptionCommand>, ChangeTransactionDescriptionValidator>();
     
     services.AddScoped<IValidator<CreateTransactionCommand>, CreateTransactionValidator>();
+    
+    // Регистрация квериков для чтения
+    services.AddScoped<IAccountQueries, AccountQueries>();
 
     return services;
   }

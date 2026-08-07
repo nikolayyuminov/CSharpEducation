@@ -1,6 +1,7 @@
 using FinanceTracker.API.Contracts.Accounts;
 using FinanceTracker.API.Mappers;
 using FinanceTracker.Application.Abstractions.Services;
+using FinanceTracker.Application.Accounts.Queries.GetAccounts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.API.Controllers;
@@ -18,6 +19,11 @@ public class AccountsController : ControllerBase
   /// Сервис для работы со счетами.
   /// </summary>
   private readonly IAccountService _accountService;
+  
+  /// <summary>
+  /// Кверик для чтения счетов.
+  /// </summary>
+  private readonly IAccountQueries _accountQueries;
 
   #endregion
 
@@ -94,6 +100,17 @@ public class AccountsController : ControllerBase
 
     return Ok();
   }
+  
+  /// <summary>
+  /// Получить список счетов пользователя.
+  /// </summary>
+  /// <param name="userId">Id пользователя.</param>
+  /// <returns>Список счетов.</returns>
+  [HttpGet]
+  public ActionResult<IReadOnlyCollection<AccountListItemDto>> GetAll([FromQuery] long userId)
+  {
+    return Ok(_accountQueries.GetAll(userId));
+  }
 
   #endregion
 
@@ -103,9 +120,10 @@ public class AccountsController : ControllerBase
   /// Конструктор.
   /// </summary>
   /// <param name="accountService">Сервис работы со счетами.</param>
-  public AccountsController(IAccountService accountService)
+  public AccountsController(IAccountService accountService, IAccountQueries accountQueries)
   {
     _accountService = accountService;
+    _accountQueries = accountQueries;
   }
 
   #endregion

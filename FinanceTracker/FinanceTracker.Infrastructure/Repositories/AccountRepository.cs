@@ -50,6 +50,14 @@ public class AccountRepository : IAccountRepository
     return _dbContext.Accounts
                      .FirstOrDefault(x => x.UserId == userId && x.Name == name);
   }
+  
+  public IReadOnlyCollection<Account> GetAll(long userId)
+  {
+    return _dbContext.Accounts
+      .Where(x => x.UserId == userId)
+      .OrderBy(x => x.Name)
+      .ToList();
+  }
 
   #endregion
 

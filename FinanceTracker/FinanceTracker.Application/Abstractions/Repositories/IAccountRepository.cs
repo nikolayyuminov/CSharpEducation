@@ -27,4 +27,10 @@ public interface IAccountRepository
   /// <param name="name">Имя счета для поиска.</param>
   /// <returns>Найденный счет или null, если счет не существует.</returns>
   Account? GetByName(long userId, string name);
+  
+  /// <summary>
+  /// Получить все счета пользователя.
+  /// </summary>
+  /// <param name="userId">Id пользователя.</param>
+  IReadOnlyCollection<Account> GetAll(long userId);
 }
