@@ -35,5 +35,5 @@ public sealed record CreateAccountRequest
   /// <summary>
   /// Кредитный лимит, если счет кредитный.
   /// </summary>
-  public decimal CreditLimit { get; init; }
+  public decimal? CreditLimit { get; init; }
 }

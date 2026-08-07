@@ -119,6 +119,7 @@ public class CategoryService : ICategoryService
     if (validationResult.HasErrors) return validationResult;
     
     var category = _categoryRepository.GetById(command.CategoryId);
+    
     if (category == null)
     {
       validationResult.AddError(new ValidationError(nameof(command.CategoryId), "Категория не найдена."));

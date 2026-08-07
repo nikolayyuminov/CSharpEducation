@@ -43,7 +43,7 @@ public class Category
   /// <summary>
   /// Навигационное свойство список транзакций.
   /// </summary>
-  public IReadOnlyCollection<Transaction> Transactions => [];
+  public ICollection<Transaction> Transactions { get; private set; } = new List<Transaction>();
 
   #endregion
 
