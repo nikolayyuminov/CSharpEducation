@@ -1,0 +1,133 @@
+@using BlazorApp1.Models
+@using BlazorApp1.Services
+@using FinanceTracker.Domain.Enums
+
+@inject AccountApiClient AccountApiClient
+
+<div class="modal fade"
+     id="createAccountModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Create account
+                </h5>
+
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <EditForm Model="_model"
+                          OnValidSubmit="Create">
+
+                    <DataAnnotationsValidator />
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Name
+                        </label>
+
+                        <InputText class="form-control"
+                                   @bind-Value="_model.Name" />
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Type
+                        </label>
+
+                        <InputSelect class="form-select"
+                                     @bind-Value="_model.AccountType">
+
+                            @foreach (var type in Enum.GetValues<AccountType>())
+                            {
+                                <option value="@type">@type</option>
+                            }
+
+                        </InputSelect>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Currency
+                        </label>
+
+                        <InputSelect class="form-select"
+                                     @bind-Value="_model.Currency">
+
+                            @foreach (var currency in Enum.GetValues<Currency>())
+                            {
+                                <option value="@currency">@currency</option>
+                            }
+
+                        </InputSelect>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Initial balance
+                        </label>
+
+                        <InputNumber class="form-control"
+                                     @bind-Value="_model.InitialBalance" />
+
+                    </div>
+
+                    @if (_model.AccountType == AccountType.Credit)
+                    {
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Credit limit
+                            </label>
+
+                            <InputNumber class="form-control"
+                                         @bind-Value="_model.CreditLimit" />
+
+                        </div>
+                    }
+
+                    <button class="btn btn-primary"
+                            type="submit">
+                        Create
+                    </button>
+
+                </EditForm>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code
+{
+    [Parameter]
+    public EventCallback AccountCreated { get; set; }
+    
+    private readonly CreateAccountModel _model = new();
+
+    private async Task Create()
+    {
+        await AccountApiClient.CreateAccountAsync(_model);
+        
+        await AccountCreated.InvokeAsync();
+    }
+}

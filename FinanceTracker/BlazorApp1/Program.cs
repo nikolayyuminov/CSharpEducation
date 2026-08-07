@@ -9,10 +9,12 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpClient("FinanceTrackerApi", client =>
 {
-  client.BaseAddress = new Uri("https://localhost:5026/");
+  client.BaseAddress = new Uri("http://localhost:5026/");
 });
 
 builder.Services.AddScoped<AccountApiClient>();
+
+builder.Services.AddScoped<CurrentUserService>();
 
 var app = builder.Build();
 

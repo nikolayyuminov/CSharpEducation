@@ -107,8 +107,11 @@ public class AccountsController : ControllerBase
   /// <param name="userId">Id пользователя.</param>
   /// <returns>Список счетов.</returns>
   [HttpGet]
-  public ActionResult<IReadOnlyCollection<AccountListItemDto>> GetAll([FromQuery] long userId)
+  public ActionResult<IReadOnlyCollection<AccountListItemDto>> GetAll()
   {
+    // TODO: заменить на получение пользователя из авторизации.
+    const long userId = 1;
+    
     return Ok(_accountQueries.GetAll(userId));
   }
 
