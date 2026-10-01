@@ -31,4 +31,9 @@ public sealed class AccountListItemDto
   /// Закрыт ли счет.
   /// </summary>
   public bool IsClosed { get; init; }
+  
+  /// <summary>
+  /// Валюта счета.
+  /// </summary>
+  public Currency Currency { get; init; }
 }

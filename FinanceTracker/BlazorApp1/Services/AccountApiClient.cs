@@ -1,4 +1,4 @@
-using System.Net.Http.Json;
+using System.Text.Json;
 using BlazorApp1.Models;
 using FinanceTracker.API.Contracts.Accounts;
 using FinanceTracker.Domain.Enums;
@@ -31,10 +31,7 @@ public class AccountApiClient
   /// </summary>
   public async Task<IReadOnlyCollection<AccountModel>> GetAccountsAsync()
   {
-    var result = await _httpClient.GetFromJsonAsync<List<AccountModel>>
-    (
-      $"api/accounts"
-    );
+    var result = await _httpClient.GetFromJsonAsync<List<AccountModel>>($"api/accounts");
 
     return result ?? [];
   }
@@ -43,7 +40,8 @@ public class AccountApiClient
   /// Создать новый счет.
   /// </summary>
   /// <param name="model">Модель создания счета.</param>
-  public async Task CreateAccountAsync(CreateAccountModel model)
+  /// <returns>HTTP-ответ API.</returns>
+  public async Task<HttpResponseMessage> CreateAccountAsync(CreateAccountModel model)
   {
     var request = new CreateAccountRequest
     {
@@ -51,24 +49,66 @@ public class AccountApiClient
       Name = model.Name,
       AccountType = model.AccountType,
       Currency = model.Currency,
-      InitialBalance = model.InitialBalance,    
+      InitialBalance = model.InitialBalance,
       CreditLimit = model.AccountType == AccountType.Credit
         ? model.CreditLimit
         : null
     };
 
-    var response = await _httpClient.PostAsJsonAsync(
-      "api/accounts",
-      request);
+    var response = await _httpClient.PostAsJsonAsync("api/accounts", request);
 
-    
     if (!response.IsSuccessStatusCode)
     {
       var error = await response.Content.ReadAsStringAsync();
+      var errorMessage = JsonSerializer.Deserialize<ValidationErrorModel[]>(error);
+      throw new Exception(error);
+    }
+
+    return response;
+  }
+
+  /// <summary>
+  /// Переименовать счет.
+  /// </summary>
+  public async Task RenameAccountAsync(long accountId, string newName)
+  {
+    var request = new RenameAccountRequest
+    {
+      UserId = 1, // DemoUser
+      AccountId = accountId,
+      NewName = newName
+    };
+
+    var response = await _httpClient.PostAsJsonAsync("api/accounts/rename", request);
+
+    if (!response.IsSuccessStatusCode)
+    {
+      var error = await response.Content.ReadAsStringAsync();
+
       throw new Exception(error);
     }
   }
+  
+  /// <summary>
+  /// Закрыть счет.
+  /// </summary>
+  /// <param name="accountId">Id счета.</param>
+  public async Task CloseAccountAsync(long accountId)
+  {
+    var request = new CloseAccountRequest
+    {
+      AccountId = accountId
+    };
 
+    var response = await _httpClient.PostAsJsonAsync("api/accounts/close", request);
+
+    if (!response.IsSuccessStatusCode)
+    {
+      var error = await response.Content.ReadAsStringAsync();
+
+      throw new Exception(error);
+    }
+  }
   #endregion
 
   #region Конструкторы

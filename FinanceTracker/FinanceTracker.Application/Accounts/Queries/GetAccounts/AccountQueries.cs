@@ -29,7 +29,8 @@ public class AccountQueries : IAccountQueries
         Name = x.Name,
         Balance = x.Balance,
         AccountType = x.AccountType,
-        IsClosed = x.IsClosed
+        IsClosed = x.IsClosed,
+        Currency = x.Currency
       })
       .ToList();
   }

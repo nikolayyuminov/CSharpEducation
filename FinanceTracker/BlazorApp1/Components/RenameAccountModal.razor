@@ -1,0 +1,98 @@
+@using BlazorApp1.Models
+@using BlazorApp1.Services
+
+@inject AccountApiClient AccountApiClient
+
+<div class="modal-header">
+
+    <h5 class="modal-title">
+        Rename account
+    </h5>
+
+    <button type="button"
+            class="btn-close"
+            @onclick="Cancel">
+    </button>
+
+</div>
+
+<div class="modal-body">
+
+    <EditForm Model="_model"
+              OnValidSubmit="Rename">
+
+        <DataAnnotationsValidator />
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Account name
+            </label>
+
+            <InputText class="form-control"
+                       @bind-Value="_model.NewName" />
+
+            <ValidationMessage For="@(() => _model.NewName)" />
+
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+
+            <button type="button"
+                    class="btn btn-secondary"
+                    @onclick="Cancel">
+                Cancel
+            </button>
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Rename
+            </button>
+
+        </div>
+
+    </EditForm>
+
+</div>
+
+@code
+{
+    [Parameter]
+    public long AccountId { get; set; }
+
+    [Parameter]
+    public string CurrentName { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnRenamed { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancelled { get; set; }
+
+
+    private RenameAccountModel _model = new();
+
+
+    protected override void OnParametersSet()
+    {
+        _model = new RenameAccountModel
+        {
+            AccountId = AccountId,
+            NewName = CurrentName
+        };
+    }
+
+
+    private async Task Rename()
+    {
+        await AccountApiClient.RenameAccountAsync(_model.AccountId, _model.NewName);
+
+        await OnRenamed.InvokeAsync();
+    }
+
+
+    private async Task Cancel()
+    {
+        await OnCancelled.InvokeAsync();
+    }
+}

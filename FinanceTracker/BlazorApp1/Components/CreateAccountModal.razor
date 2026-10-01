@@ -1,115 +1,110 @@
 @using BlazorApp1.Models
 @using BlazorApp1.Services
 @using FinanceTracker.Domain.Enums
+@using Microsoft.JSInterop
 
-@inject AccountApiClient AccountApiClient
+@inject AccountApiClient _accountApiClient
+@inject IJSRuntime JS
 
-<div class="modal fade"
-     id="createAccountModal"
-     tabindex="-1"
-     aria-hidden="true">
+<div class="modal-dialog">
 
-    <div class="modal-dialog">
+    <div class="modal-content">
 
-        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                Create account
+            </h5>
 
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    Create account
-                </h5>
+            <button class="btn-close"
+                    data-bs-dismiss="modal">
+            </button>
+        </div>
 
-                <button class="btn-close"
-                        data-bs-dismiss="modal">
-                </button>
-            </div>
+        <div class="modal-body">
 
-            <div class="modal-body">
+            <EditForm Model="request"
+                      OnValidSubmit="Create">
 
-                <EditForm Model="_model"
-                          OnValidSubmit="Create">
+                <DataAnnotationsValidator />
 
-                    <DataAnnotationsValidator />
+                <div class="mb-3">
 
+                    <label class="form-label">
+                        Name
+                    </label>
+
+                    <InputText class="form-control"
+                               @bind-Value="request.Name" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Type
+                    </label>
+
+                    <InputSelect class="form-select"
+                                 @bind-Value="request.AccountType">
+
+                        @foreach (var type in Enum.GetValues<AccountType>())
+                        {
+                            <option value="@type">@type</option>
+                        }
+
+                    </InputSelect>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Currency
+                    </label>
+
+                    <InputSelect class="form-select"
+                                 @bind-Value="request.Currency">
+
+                        @foreach (var currency in Enum.GetValues<Currency>())
+                        {
+                            <option value="@currency">@currency</option>
+                        }
+
+                    </InputSelect>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Initial balance
+                    </label>
+
+                    <InputNumber class="form-control"
+                                 @bind-Value="request.InitialBalance" />
+
+                </div>
+
+                @if (request.AccountType == AccountType.Credit)
+                {
                     <div class="mb-3">
 
                         <label class="form-label">
-                            Name
-                        </label>
-
-                        <InputText class="form-control"
-                                   @bind-Value="_model.Name" />
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Type
-                        </label>
-
-                        <InputSelect class="form-select"
-                                     @bind-Value="_model.AccountType">
-
-                            @foreach (var type in Enum.GetValues<AccountType>())
-                            {
-                                <option value="@type">@type</option>
-                            }
-
-                        </InputSelect>
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Currency
-                        </label>
-
-                        <InputSelect class="form-select"
-                                     @bind-Value="_model.Currency">
-
-                            @foreach (var currency in Enum.GetValues<Currency>())
-                            {
-                                <option value="@currency">@currency</option>
-                            }
-
-                        </InputSelect>
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Initial balance
+                            Credit limit
                         </label>
 
                         <InputNumber class="form-control"
-                                     @bind-Value="_model.InitialBalance" />
+                                     @bind-Value="request.CreditLimit" />
 
                     </div>
+                }
 
-                    @if (_model.AccountType == AccountType.Credit)
-                    {
-                        <div class="mb-3">
+                <button class="btn btn-primary"
+                        type="submit">
+                    Create
+                </button>
 
-                            <label class="form-label">
-                                Credit limit
-                            </label>
-
-                            <InputNumber class="form-control"
-                                         @bind-Value="_model.CreditLimit" />
-
-                        </div>
-                    }
-
-                    <button class="btn btn-primary"
-                            type="submit">
-                        Create
-                    </button>
-
-                </EditForm>
-
-            </div>
+            </EditForm>
 
         </div>
 
@@ -119,15 +114,34 @@
 
 @code
 {
+    #region Параметры
+
     [Parameter]
-    public EventCallback AccountCreated { get; set; }
-    
-    private readonly CreateAccountModel _model = new();
+    public EventCallback OnCreated { get; set; }
+
+    #endregion
+
+    #region Поля
+
+    private readonly CreateAccountModel request = new();
+
+    #endregion
+
+    #region Методы
 
     private async Task Create()
     {
-        await AccountApiClient.CreateAccountAsync(_model);
-        
-        await AccountCreated.InvokeAsync();
+        var response = await _accountApiClient.CreateAccountAsync(request);
+
+        if (!response.IsSuccessStatusCode)
+            return;
+
+        await OnCreated.InvokeAsync();
+
+        await JS.InvokeVoidAsync(
+            "closeModal",
+            "createAccountModal");
     }
+
+    #endregion
 }
