@@ -109,6 +109,27 @@ public class AccountApiClient
       throw new Exception(error);
     }
   }
+  
+  /// <summary>
+  /// Изменить кредитный лимит счета.
+  /// </summary>
+  public async Task ChangeCreditLimitAsync(long accountId, decimal newCreditLimit)
+  {
+    var request = new ChangeCreditLimitRequest
+    {
+      AccountId = accountId,
+      NewCreditLimit = newCreditLimit
+    };
+
+    var response = await _httpClient.PostAsJsonAsync("api/accounts/change-credit-limit", request);
+
+    if (!response.IsSuccessStatusCode)
+    {
+      var error = await response.Content.ReadAsStringAsync();
+
+      throw new Exception(error);
+    }
+  }
   #endregion
 
   #region Конструкторы

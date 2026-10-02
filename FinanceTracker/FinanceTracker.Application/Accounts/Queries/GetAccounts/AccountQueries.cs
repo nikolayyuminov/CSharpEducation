@@ -1,4 +1,5 @@
 using FinanceTracker.Application.Abstractions.Repositories;
+using FinanceTracker.Domain.Entities;
 
 namespace FinanceTracker.Application.Accounts.Queries.GetAccounts;
 
@@ -30,7 +31,10 @@ public class AccountQueries : IAccountQueries
         Balance = x.Balance,
         AccountType = x.AccountType,
         IsClosed = x.IsClosed,
-        Currency = x.Currency
+        Currency = x.Currency,
+        CreditLimit = x is CreditAccount creditAccount
+        ? creditAccount.CreditLimit
+        : null
       })
       .ToList();
   }

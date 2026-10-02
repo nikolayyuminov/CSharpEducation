@@ -36,4 +36,9 @@ public sealed class AccountListItemDto
   /// Валюта счета.
   /// </summary>
   public Currency Currency { get; init; }
+  
+  /// <summary>
+  /// Кредитный лимит.
+  /// </summary>
+  public decimal? CreditLimit  { get; init; }
 }

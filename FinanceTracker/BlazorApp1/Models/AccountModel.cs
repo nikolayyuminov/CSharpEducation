@@ -15,4 +15,6 @@ public sealed class AccountModel
   public AccountType AccountType { get; set; }
 
   public bool IsClosed { get; set; }
+  
+  public decimal? CreditLimit { get; set; }
 }
