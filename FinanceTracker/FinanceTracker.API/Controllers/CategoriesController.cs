@@ -1,6 +1,8 @@
 using FinanceTracker.API.Contracts.Categories;
 using FinanceTracker.API.Mappers;
+using FinanceTracker.Application.Abstractions.Queries;
 using FinanceTracker.Application.Abstractions.Services;
+using FinanceTracker.Application.Categories.Queries.GetCategories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.API.Controllers;
@@ -18,6 +20,11 @@ public class CategoriesController : ControllerBase
   /// Сервис для работы с категориями.
   /// </summary>
   private readonly ICategoryService _categoryService;
+  
+  /// <summary>
+  /// Запросы для получения категорий.
+  /// </summary>
+  private readonly ICategoryQueries _categoryQueries;
 
   #endregion
 
@@ -94,6 +101,20 @@ public class CategoriesController : ControllerBase
 
     return Ok();
   }
+  
+  /// <summary>
+  /// Получить категории пользователя и системные категории.
+  /// </summary>
+  /// <param name="userId"> Id пользователя. </param>
+  /// <returns> Коллекция категорий. </returns>
+  [HttpGet]
+  public ActionResult<IReadOnlyCollection<CategoryListItemDto>> GetAll()
+  {
+    // TODO: заменить на получение пользователя из авторизации.
+    const long userId = 1;
+    
+    return Ok(_categoryQueries.GetAll(userId));
+  }
   #endregion
   
   #region Конструкторы
@@ -102,9 +123,11 @@ public class CategoriesController : ControllerBase
   /// Конструктор.
   /// </summary>
   /// <param name="categoryService">Сервис работы с категориями.</param>
-  public CategoriesController(ICategoryService categoryService)
+  /// <param name="categoryQueries">Запросы для получения категорий.</param>
+  public CategoriesController(ICategoryService categoryService, ICategoryQueries categoryQueries)
   {
     _categoryService = categoryService;
+    _categoryQueries = categoryQueries;
   }
 
   #endregion

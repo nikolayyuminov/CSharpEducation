@@ -51,6 +51,16 @@ public class CategoryRepository : ICategoryRepository
                      .FirstOrDefault(c => (c.UserId == userId || c.UserId == null) && c.Name == name);
   }
 
+  /// <summary>
+  /// Получить категории пользователя и системные категории.
+  /// </summary>
+  /// <param name="userId"> Id пользователя. </param>
+  /// <returns> Коллекция категорий пользователя и системных категорий. </returns>
+  public IReadOnlyCollection<Category> GetAll(long userId)
+  {
+    return _dbContext.Categories.Where(c => c.UserId == null || c.UserId == userId).ToList();
+  }
+  
   #endregion
 
   #region Конструкторы

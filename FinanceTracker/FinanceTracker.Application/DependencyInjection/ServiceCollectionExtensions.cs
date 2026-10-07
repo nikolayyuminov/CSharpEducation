@@ -1,4 +1,5 @@
 using FinanceTracker.Application.Abstractions.Factories;
+using FinanceTracker.Application.Abstractions.Queries;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Abstractions.Validation;
 using FinanceTracker.Application.Accounts.Commands;
@@ -6,6 +7,7 @@ using FinanceTracker.Application.Accounts.Queries.GetAccounts;
 using FinanceTracker.Application.Accounts.Services;
 using FinanceTracker.Application.Accounts.Validators;
 using FinanceTracker.Application.Categories.Commands;
+using FinanceTracker.Application.Categories.Queries.GetCategories;
 using FinanceTracker.Application.Categories.Services;
 using FinanceTracker.Application.Categories.Validators;
 using FinanceTracker.Application.Factories;
@@ -28,7 +30,7 @@ public static class ServiceCollectionExtensions
   /// Зарегистрировать зависимости слоя Application.
   /// </summary>
   /// <param name="services">Коллекция сервисов.</param>
-  /// <returns>Коллекция сервисов.</returns>
+  /// <returns>Коллекция зарегистрированных сервисов.</returns>
   public static IServiceCollection AddApplication(this IServiceCollection services)
   {
     // Регистрация сервисов
@@ -70,6 +72,8 @@ public static class ServiceCollectionExtensions
     
     // Регистрация квериков для чтения
     services.AddScoped<IAccountQueries, AccountQueries>();
+    
+    services.AddScoped<ICategoryQueries, CategoryQueries>();
 
     return services;
   }

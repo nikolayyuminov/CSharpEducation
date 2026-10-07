@@ -27,4 +27,11 @@ public interface ICategoryRepository
   /// <param name="name">Имя категории.</param>
   /// <returns>Категория, может быть пустой.</returns>
   Domain.Entities.Category? GetByName(long? userId, string name);
+  
+  /// <summary>
+  /// Получить категории пользователя и системные категории.
+  /// </summary>
+  /// <param name="userId"> Id пользователя. </param>
+  /// <returns> Коллекция категорий пользователя и системных категорий. </returns>
+  IReadOnlyCollection<Domain.Entities.Category> GetAll(long userId);
 }

@@ -1,5 +1,6 @@
 using FinanceTracker.API.Contracts.Accounts;
 using FinanceTracker.API.Mappers;
+using FinanceTracker.Application.Abstractions.Queries;
 using FinanceTracker.Application.Abstractions.Services;
 using FinanceTracker.Application.Accounts.Queries.GetAccounts;
 using Microsoft.AspNetCore.Mvc;
@@ -100,11 +101,10 @@ public class AccountsController : ControllerBase
 
     return Ok();
   }
-  
+
   /// <summary>
   /// Получить список счетов пользователя.
   /// </summary>
-  /// <param name="userId">Id пользователя.</param>
   /// <returns>Список счетов.</returns>
   [HttpGet]
   public ActionResult<IReadOnlyCollection<AccountListItemDto>> GetAll()

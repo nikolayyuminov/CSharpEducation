@@ -1,4 +1,6 @@
-namespace FinanceTracker.Application.Accounts.Queries.GetAccounts;
+using FinanceTracker.Application.Accounts.Queries.GetAccounts;
+
+namespace FinanceTracker.Application.Abstractions.Queries;
 
 /// <summary>
 /// Запросы для чтения счетов.
